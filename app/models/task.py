@@ -10,7 +10,7 @@ class Task(db.Model):
     description = db.Column(db.String(100), default="")
     priority = db.Column(db.String(20), default="low")
     is_complete = db.Column(db.Boolean, default=False)
-    list = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("lists.id")))
+    list_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("lists.id")))
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
 
     list = db.relationship("List", back_populates="tasks")
