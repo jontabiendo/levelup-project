@@ -24,5 +24,6 @@ class Task(db.Model):
             'priority': self.priority,
             'is_complete': self.is_complete,
             'list_id': self.list,
-            'user_id': self.user_id
+            'user_id': self.user_id,
+            'comments': {comment.id: comment for comment in self.comments}
         }

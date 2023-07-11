@@ -14,7 +14,11 @@ class Team(db.Model):
 
     creator = db.relationship("User", back_populates="team")
     lists = db.relationship("List", back_populates="team")
-    team_members = db.relationship("User", secondary='team_members', back_populates='user_teams')
+    team_members = db.relationship("Team_Member",back_populates='team')
+
+    # user_association = db.relationship("Team_Member", back_populates="teams", cascade = "all, delete")
+
+    # members = association_proxy("user_association", "users", creator=lambda x: Team_Member(members=x))
 
     def to_dict(self):
         return {

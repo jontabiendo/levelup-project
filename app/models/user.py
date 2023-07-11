@@ -19,8 +19,12 @@ class User(db.Model, UserMixin):
     lists = db.relationship("List", back_populates="user")
     tasks = db.relationship("Task", back_populates="user")
     team = db.relationship("Team", back_populates="creator")
-    user_teams = db.relationship("Team", secondary='team_members', back_populates='team_members')
+    user_teams = db.relationship("Team_Member", back_populates='member')
     comments = db.relationship("Comment", back_populates="user")
+
+    # team_association = db.relationship("Team_Member", back_populates="members", cascade = "all, delete")
+
+    # teams = association_proxy("team_association", "teams", creator=lambda x: Team_Member(teams =x))
 
     @property
     def password(self):

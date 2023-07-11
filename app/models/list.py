@@ -9,7 +9,7 @@ class List(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False, default = "untitled")
     category = db.Column(db.String(50))
-    status = db.Column(db.Boolean, default="in_progress")
+    in_progress = db.Column(db.Boolean, default=True)
     description = db.Column(db.String(255))
     is_public = db.Column(db.Boolean, default = False)
     team_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("teams.id")))
