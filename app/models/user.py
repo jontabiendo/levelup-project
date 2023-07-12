@@ -18,7 +18,7 @@ class User(db.Model, UserMixin):
 
     lists = db.relationship("List", back_populates="user")
     tasks = db.relationship("Task", back_populates="user")
-    owned_teams = db.relationship("Team", back_populates="creator")
+    team = db.relationship("Team", back_populates="creator")
     user_teams = db.relationship("Team_Member", back_populates='member')
     comments = db.relationship("Comment", back_populates="user")
 
@@ -38,24 +38,9 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
     def to_dict(self):
-        personal_lists = {list.id: list.to_dict() for list in self.lists if not list.team_id}
-        team_lists = {list.id: list.to_dict() for list in self.lists if list.team_id}
-
         return {
             'id': self.id,
             'email': self.email,
             "first_name": self.first_name,
-            "last_name": self.last_name,
-            "lists": {
-                "personal_lists": {**personal_lists},
-                "team_lists": {**team_lists}},
-            "teams": {team.id: team.team_to_dict() for team in self.user_teams}
-        }
-    
-    def no_eager_dict(self):
-        return {
-            'id': self.id,
-            'email': self.email,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
+            "last_name": self.last_name
         }

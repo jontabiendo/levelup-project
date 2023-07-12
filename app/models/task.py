@@ -25,5 +25,5 @@ class Task(db.Model):
             'is_complete': self.is_complete,
             'list_id': self.list_id,
             'user_id': self.user_id,
-            'comments': {comment.id: comment.to_dict() for comment in self.comments}
+            'comments': [comment.to_dict() for comment in self.comments]
         }
