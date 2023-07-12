@@ -45,7 +45,7 @@ function SignupFormPage() {
           />
         </label>
         <label>
-          Username
+          First Name
           <input
             type="text"
             value={firstName}
@@ -54,7 +54,7 @@ function SignupFormPage() {
           />
         </label>
         <label>
-          Username
+          Last Name
           <input
             type="text"
             value={lastName}
