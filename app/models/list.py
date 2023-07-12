@@ -21,16 +21,18 @@ class List(db.Model):
     team = db.relationship("Team", back_populates="lists")
 
     def to_dict(self):
+        task_dict = {task.id: task.to_dict() for task in self.tasks}
+
         return {
             'id': self.id,
             'title': self.title,
             'category': self.category,
-            'status': self.status,
+            'in_progress': self.in_progress,
             'description': self.description,
             'is_public': self.is_public,
             'team_id': self.team_id,
-            'user': self.user.to_dict(),
-            'tasks': {task.id: task for task in self.tasks}
+            'user_id': self.user_id,
+            'tasks': [task.to_dict() for task in self.tasks]
         }
     
     def to_dict_no_eager(self):
@@ -38,7 +40,7 @@ class List(db.Model):
             'id': self.id,
             'title': self.title,
             'category': self.category,
-            'status': self.status,
+            'in_progress': self.in_progress,
             'description': self.description,
             'is_public': self.is_public,
             'team_id': self.team_id,

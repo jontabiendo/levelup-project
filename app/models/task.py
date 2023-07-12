@@ -23,7 +23,7 @@ class Task(db.Model):
             'description': self.description,
             'priority': self.priority,
             'is_complete': self.is_complete,
-            'list_id': self.list,
+            'list_id': self.list_id,
             'user_id': self.user_id,
-            'comments': {comment.id: comment for comment in self.comments}
+            'comments': [comment.to_dict() for comment in self.comments]
         }
