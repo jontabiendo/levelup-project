@@ -1,0 +1,30 @@
+.signup-form-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed yellow;
+    background-color: #EFC400;
+    width: 40rem;
+    margin: auto;
+    height: 20rem;
+}
+
+#signup-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#signup-form > label {
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.alt-buttons {
+    display: flex;
+    flex-direction: column;
+}

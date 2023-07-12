@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
-import { signUp } from "../../store/session";
+import { Redirect, Link } from "react-router-dom";
+import { signUp, login } from "../../store/session";
 import './SignupForm.css';
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function SignupFormPage() {
   const dispatch = useDispatch();
+  const history = useHistory
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -28,12 +30,16 @@ function SignupFormPage() {
     }
   };
 
+  const guestSignin = async () => {
+    await dispatch(login("demo@aa.io", "password"));
+  }
+
   return (
-    <>
+    <div className="signup-form-div">
       <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id="signup-form">
         <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          {errors.map((error, idx) => <li key={idx} className="errors">{error}</li>)}
         </ul>
         <label>
           Email
@@ -82,7 +88,11 @@ function SignupFormPage() {
         </label>
         <button type="submit">Sign Up</button>
       </form>
-    </>
+      <div className="alt-buttons">
+        <button onClick={guestSignin}>Continue as guest</button>
+        <Link to='/login'>Already have an account? Sign In</Link>
+      </div>
+    </div>
   );
 }
 

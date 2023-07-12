@@ -3,9 +3,11 @@ import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import './LoginForm.css';
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function LoginFormPage() {
   const dispatch = useDispatch();
+  const history = useHistory()
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,13 +23,17 @@ function LoginFormPage() {
     }
   };
 
+  const guestSignin = async () => {
+    await dispatch(login("demo@aa.io", "password"));
+  }
+
   return (
-    <>
+    <div className="login-form-div">
       <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="login-form">
         <ul>
           {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
+            <li key={idx} className="errors">{error}</li>
           ))}
         </ul>
         <label>
@@ -50,7 +56,11 @@ function LoginFormPage() {
         </label>
         <button type="submit">Log In</button>
       </form>
-    </>
+      <div className="alt-buttons">
+        <button onClick={guestSignin}>Continue as guest</button>
+        <button onClick={() => history.push('/signup')}>Sign Up</button>
+      </div>
+    </div>
   );
 }
 

@@ -1,0 +1,26 @@
+#background {
+    object-fit: cover;
+    object-position: center center;
+    position: fixed;
+    top: 0;
+    z-index: -5;
+    width: 100vw;
+    height: 100vh;
+}
+
+#background > iframe {
+    height: 150vh;
+    width: 150vw;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    translate: -17.5%;
+}
+
+#video-overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: -4;
+}

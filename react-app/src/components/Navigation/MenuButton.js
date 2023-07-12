@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
-import OpenModalButton from "../OpenModalButton";
-import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SignupFormModal";
+// import OpenModalButton from "../OpenModalButton";
+// import LoginFormModal from "../LoginFormModal";
+// import SignupFormModal from "../SignupFormModal";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-function ProfileButton({ user }) {
+function MenuButton({ user }) {
   const dispatch = useDispatch();
+  const history = useHistory()
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
@@ -39,13 +41,13 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+      <button id='menu-button' onClick={openMenu}>
+      <i className="fa-solid fa-bars fa-2xl"></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.firstName}</li>
+            <li>{user.first_name}</li>
             <li>{user.email}</li>
             <li>
               <button onClick={handleLogout}>Log Out</button>
@@ -53,17 +55,9 @@ function ProfileButton({ user }) {
           </>
         ) : (
           <>
-            <OpenModalButton
-              buttonText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
+            <button onClick={() => history.push('/login')} className="nav-button">Log In</button>
 
-            <OpenModalButton
-              buttonText="Sign Up"
-              onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
-            />
+            <button onClick={() => history.push('/signup')} className="nav-button">Sign Up</button>
           </>
         )}
       </ul>
@@ -71,4 +65,4 @@ function ProfileButton({ user }) {
   );
 }
 
-export default ProfileButton;
+export default MenuButton;
