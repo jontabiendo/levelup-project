@@ -1,3 +1,6 @@
+import { clearLists, setLists } from "./lists";
+import { clearTeams, setTeams } from "./teams";
+
 // constants
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
@@ -11,7 +14,14 @@ const removeUser = () => ({
 	type: REMOVE_USER,
 });
 
-const initialState = { user: null };
+const manipulateData = (data) => {
+	const objReturn = {};
+
+	objReturn.lists = data.lists;
+	objReturn.teams = data.teams;
+
+	return objReturn;
+}
 
 export const authenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/", {
@@ -24,8 +34,11 @@ export const authenticate = () => async (dispatch) => {
 		if (data.errors) {
 			return;
 		}
+		const manData = manipulateData(data)
 
 		dispatch(setUser(data));
+		dispatch(setLists(manData.lists));
+		dispatch(setTeams(manData.teams));
 	}
 };
 
@@ -44,7 +57,12 @@ export const login = (email, password) => async (dispatch) => {
 	if (response.ok) {
 		const data = await response.json();
 		dispatch(setUser(data));
+
+		const manData = manipulateData(data)
+		dispatch(setLists(manData.lists))
+		dispatch(setTeams(manData.teams))
 		return null;
+
 	} else if (response.status < 500) {
 		const data = await response.json();
 		if (data.errors) {
@@ -64,6 +82,8 @@ export const logout = () => async (dispatch) => {
 
 	if (response.ok) {
 		dispatch(removeUser());
+		dispatch(clearLists());
+		dispatch(clearTeams());
 	}
 };
 
@@ -95,12 +115,16 @@ export const signUp = (first_name, last_name, email, password) => async (dispatc
 	}
 };
 
+const initialState = {
+	user: null
+};
+
 export default function reducer(state = initialState, action) {
 	switch (action.type) {
 		case SET_USER:
 			return { user: action.payload };
 		case REMOVE_USER:
-			return { user: null };
+			return { user: null};
 		default:
 			return state;
 	}
