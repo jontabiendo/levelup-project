@@ -12,9 +12,9 @@ class Team(db.Model):
     created_by = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
     created_at = db.Column(db.DateTime, default=db.func.now())
 
-    creator = db.relationship("User", back_populates="team")
+    creator = db.relationship("User", back_populates="owned_teams")
     lists = db.relationship("List", back_populates="team")
-    team_members = db.relationship("Team_Member",back_populates='team')
+    team_members = db.relationship("Team_Member", back_populates='team', cascade="all, delete")
 
     # user_association = db.relationship("Team_Member", back_populates="teams", cascade = "all, delete")
 
@@ -25,7 +25,7 @@ class Team(db.Model):
             'id': self.id,
             'name': self.name,
             'description': self.description,
-            'created_by': self.created_by,
             'created_at': self.created_at,
-            'lists': {list.id: list for list in self.lists}
+            "lists": {list.id: list.to_dict() for list in self.lists},
+            "members": {member.id: member.member_to_dict() for member in self.team_members}
         }
