@@ -74,7 +74,8 @@ export const signUp = (username, email, password) => async (dispatch) => {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			username,
+			first_name,
+			last_name,
 			email,
 			password,
 		}),
