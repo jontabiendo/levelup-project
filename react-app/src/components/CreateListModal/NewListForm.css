@@ -1,0 +1,18 @@
+.newlist-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 34rem;
+    height: 27rem;
+    align-items: center;
+}
+
+.newlist-form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.newlist-form > label {
+    margin-bottom: 1rem;
+    width: 100%;
+}

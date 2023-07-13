@@ -32,7 +32,7 @@ class List(db.Model):
             'is_public': self.is_public,
             'team_id': self.team_id,
             'user_id': self.user_id,
-            'tasks': [task.to_dict() for task in self.tasks]
+            'tasks': {task.id: task.to_dict() for task in self.tasks}
         }
     
     def to_dict_no_eager(self):

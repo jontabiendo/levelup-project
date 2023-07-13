@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function SignupFormPage() {
   const dispatch = useDispatch();
-  const history = useHistory
+  const history = useHistory()
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -25,6 +25,7 @@ function SignupFormPage() {
         if (data) {
           setErrors(data)
         }
+        history.push('/home')
     } else {
         setErrors(['Confirm Password field must be the same as the Password field']);
     }

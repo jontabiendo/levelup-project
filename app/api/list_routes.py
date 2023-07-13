@@ -18,7 +18,7 @@ def get_lists():
     return {"lists": [list.to_dict() for list in lists]}
 
 @list_routes.route('/new', methods=["POST"])
-@login_required
+# @login_required
 def post_list():
     """
     Create a new list for the logged in user
@@ -37,7 +37,7 @@ def post_list():
         db.session.add(new_list)
         db.session.commit()
 
-        return {"new_list": new_list.to_dict()}
+        return {new_list.id: new_list.to_dict()}
     return {'errors': validation_errors_to_error_messages(form.errors)}
 
 @list_routes.route('/<int:listId>/edit', methods=["PUT"])

@@ -19,6 +19,9 @@ const manipulateData = (data) => {
 
 	objReturn.lists = data.lists;
 	objReturn.teams = data.teams;
+	delete data.lists
+	delete data.teams
+	objReturn.user = data
 
 	return objReturn;
 }
@@ -36,7 +39,7 @@ export const authenticate = () => async (dispatch) => {
 		}
 		const manData = manipulateData(data)
 
-		dispatch(setUser(data));
+		dispatch(setUser(manData.user));
 		dispatch(setLists(manData.lists));
 		dispatch(setTeams(manData.teams));
 	}

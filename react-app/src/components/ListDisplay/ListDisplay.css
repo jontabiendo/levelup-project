@@ -1,0 +1,18 @@
+.list-display-div {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    width: 45rem;
+    height: 28rem;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.list-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

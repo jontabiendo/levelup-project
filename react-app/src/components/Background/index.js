@@ -3,8 +3,6 @@ import React, { useRef, useEffect } from 'react'
 import './background.css'
 
 const Background = () => {
-    const overlayRef = useRef();
-
     return (
         <>
             <div id='video-overlay' onClick={null}></div>

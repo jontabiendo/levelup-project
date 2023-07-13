@@ -34,6 +34,7 @@ function MenuButton({ user }) {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
+    history.push('/login')
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
