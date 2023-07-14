@@ -66,3 +66,13 @@ def edit_list(listId):
         return {"updated list": list.to_dict()}
     
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+@list_routes.route('/<int:listId>/delete', methods=["DELETE"])
+@login_required
+def delete_list(listId):
+    list = List.query.get(listId)
+
+    db.session.delete(list)
+    db.session.commit()
+
+    return {"success": "list deleted"}

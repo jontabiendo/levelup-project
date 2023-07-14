@@ -24,7 +24,7 @@ function SignupFormModal() {
 				setErrors(data);
 			} else {
 				closeModal();
-				history.push('/home')
+				history.push('/lists')
 			}
 		} else {
 			setErrors([

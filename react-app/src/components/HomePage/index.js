@@ -21,7 +21,13 @@ const HomePage = () => {
     return (
         <div className="home-page-div">
             <ListMenu />
-            <ListDisplay list={currentList}/>
+            {/* <Switch>
+                {Object.values(lists).map(list => (
+                    <Route path={`/lists/${list.id}`}>
+                        <ListDisplay list={list}/>
+                    </Route>
+                ))}
+            </Switch> */}
             <div className="right-panels">
                 <button>Create List</button>
                 <button>Create Team</button>

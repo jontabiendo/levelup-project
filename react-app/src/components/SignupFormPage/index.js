@@ -25,7 +25,7 @@ function SignupFormPage() {
         if (data) {
           setErrors(data)
         }
-        history.push('/home')
+        history.push('/lists')
     } else {
         setErrors(['Confirm Password field must be the same as the Password field']);
     }

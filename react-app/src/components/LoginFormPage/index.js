@@ -21,7 +21,7 @@ function LoginFormPage() {
     if (data) {
       setErrors(data);
     }
-    history.push('/home')
+    history.push('/lists')
   };
 
   const guestSignin = async () => {

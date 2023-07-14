@@ -3,6 +3,7 @@ const CLEAR_LISTS = 'lists/DELETE_LIST';
 const ADD_PERSONAL_LIST = "list/ADD_PERSONAL_LIST";
 const ADD_TEAM_LIST = "list/ADD_TEAM_LIST";
 const SET_CURRENT_LIST = "list/SET_CURRENT_LIST";
+const DELETE_LIST = 'list/DELETE_LIST'
 
 export const setLists = (lists) => ({
     type: SET_LISTS,
@@ -28,6 +29,11 @@ export const setCurrentList = (list) => ({
     list
 })
 
+const deleteList = (listId) => ({
+    type: DELETE_LIST,
+    listId
+})
+
 export const createListThunk = (title, category, description, isPublic) => async dispatch => {
     console.log("****DISPATCHING****", title, category, description, isPublic)
     const res = await fetch(`/api/lists/new`, {
@@ -51,6 +57,18 @@ export const createListThunk = (title, category, description, isPublic) => async
         return data;
     };
 };
+
+export const deleteListThunk = (listId) => async dispatch => {
+    const res = await fetch(`api/lists/${listId}/delete`, {
+        method: "DELETE",
+    });
+
+    const data = await res.json();
+
+    dispatch(deleteList(listId));
+
+    return null
+}
 
 const initialState = {
     personal_lists: null,
@@ -84,6 +102,10 @@ const listsReducer = (state = initialState, action) => {
                 },
                 curret_list: action.list
             }
+        case DELETE_LIST:
+            let newState = {...state}
+            delete newState.personal_lists[action.listId]
+            return newState
         default:
             return state
     }

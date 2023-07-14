@@ -20,6 +20,10 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       <Background />
       {isLoaded && (
+        <>
+        <Route path='/lists'>
+          <HomePage />
+        </Route>
         <Switch>
           <Route path="/login" >
             <LoginFormPage />
@@ -27,10 +31,8 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path='/home'>
-            <HomePage />
-          </Route>
         </Switch>
+        </>
       )}
     </>
   );
