@@ -40,6 +40,7 @@ class User(db.Model, UserMixin):
     def to_dict(self):
         personal_lists = {list.id: list.to_dict() for list in self.lists if not list.team_id}
         team_lists = {list.id: list.to_dict() for list in self.lists if list.team_id}
+        current_list = max(self.lists, key=lambda x: x.created_at)
 
         return {
             'id': self.id,
@@ -48,7 +49,9 @@ class User(db.Model, UserMixin):
             "last_name": self.last_name,
             "lists": {
                 "personal_lists": {**personal_lists},
-                "team_lists": {**team_lists}},
+                "team_lists": {**team_lists},
+                "current_list": current_list.to_dict()
+            },
             "teams": {team.id: team.team_to_dict() for team in self.user_teams}
         }
     

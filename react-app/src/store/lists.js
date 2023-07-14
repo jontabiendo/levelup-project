@@ -1,26 +1,32 @@
-const SET_LISTS = "lists/SET_LIST"
-const CLEAR_LISTS = 'lists/DELETE_LIST'
-const ADD_PERSONAL_LIST = "list/ADD_PERSONAL_LIST"
-const ADD_TEAM_LIST = "list/ADD_TEAM_LIST"
+const SET_LISTS = "lists/SET_LIST";
+const CLEAR_LISTS = 'lists/DELETE_LIST';
+const ADD_PERSONAL_LIST = "list/ADD_PERSONAL_LIST";
+const ADD_TEAM_LIST = "list/ADD_TEAM_LIST";
+const SET_CURRENT_LIST = "list/SET_CURRENT_LIST";
 
 export const setLists = (lists) => ({
     type: SET_LISTS,
     lists
 });
 
-const addList = (list) => ({
+const addPersonalList = (list) => ({
     type: ADD_PERSONAL_LIST,
     list
-})
+});
 
 const addTeamList = (list) => ({
     type: ADD_TEAM_LIST,
     list
-})
+});
 
 export const clearLists = () => ({
     type: CLEAR_LISTS
 });
+
+export const setCurrentList = (list) => ({
+    type: SET_CURRENT_LIST,
+    list
+})
 
 export const createListThunk = (title, category, description, isPublic) => async dispatch => {
     console.log("****DISPATCHING****", title, category, description, isPublic)
@@ -39,7 +45,7 @@ export const createListThunk = (title, category, description, isPublic) => async
 
     if (res.ok) {
         if (data.team_id) dispatch(addTeamList(data))
-        else dispatch(addList(data))
+        else dispatch(addPersonalList(data))
         return null;
     } else {
         return data;
@@ -66,7 +72,8 @@ const listsReducer = (state = initialState, action) => {
                 personal_lists: {
                     ...state.personal_lists,
                     ...action.list
-                }
+                },
+                current_list: action.list
             }
         case ADD_TEAM_LIST:
             return {
@@ -74,7 +81,8 @@ const listsReducer = (state = initialState, action) => {
                 team_lists: {
                     ...state.team_lists,
                     ...action.list
-                }
+                },
+                curret_list: action.list
             }
         default:
             return state

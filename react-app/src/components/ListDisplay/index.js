@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 
 import './ListDisplay.css'
 import listsReducer from "../../store/lists";
@@ -9,6 +10,14 @@ const ListDisplay = ({ list }) => {
     const [showComplete, setShowComplete] = useState(false)
     const [description, setDescription] = useState(list.description)
     const [tasks, setTasks] = useState(list.tasks)
+
+    useEffect(() => {
+        console.log("rerendering")
+        setTitle(list.title)
+        setShowComplete(false)
+        setDescription(list.description)
+        setTasks(list.tasks)
+    }, [list])
 
 
     const handleSubmit = () => {
@@ -31,7 +40,7 @@ const ListDisplay = ({ list }) => {
             </div>
             <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="description"></input>
             <ul className="list-tasks-ul">
-                {Object.values(tasks).map(task => (
+                {tasks ? Object.values(tasks).map(task => (
                     <li key={task.id} className="list-item">
                         <div className="left-task-wrapper">
                         <input type="checkbox" onChange={(e) => setTasks({
@@ -58,7 +67,7 @@ const ListDisplay = ({ list }) => {
                             <button><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </li>
-                ))}
+                )): null}
             </ul>
             <button onClick={(e) => newTask(e)}>+</button>
             </form>

@@ -9,12 +9,12 @@ import './HomePage.css'
 
 const HomePage = () => {
     const user = useSelector(state => state.session.user)
+    const currentList = useSelector(state => state.lists.current_list)
     const lists = useSelector(state => state.lists.personal_lists)
-    const [currentList, setCurrentList] = useState(Object.values(lists).shift())
 
     useEffect(() => {
 
-    }, [user])
+    }, [currentList])
 
     if (!user) return null;
 
