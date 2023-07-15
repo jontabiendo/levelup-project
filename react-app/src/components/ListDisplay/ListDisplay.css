@@ -4,12 +4,6 @@
     flex-direction: column;
     width: 45rem;
     height: 28rem;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
 }
 
 .list-header {

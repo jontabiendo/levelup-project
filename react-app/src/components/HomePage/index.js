@@ -9,25 +9,21 @@ import './HomePage.css'
 
 const HomePage = () => {
     const user = useSelector(state => state.session.user)
-    const currentList = useSelector(state => state.lists.current_list)
     const lists = useSelector(state => state.lists.personal_lists)
-
-    useEffect(() => {
-
-    }, [currentList])
+    const [currentList, setCurrentList] = useState(Object.values(lists)[0])
+    const [reRender, setRerender] = useState(false)
+    
+    const homeRerender = () => {
+        setRerender(!reRender)
+    }
 
     if (!user) return null;
 
     return (
         <div className="home-page-div">
-            <ListMenu />
-            {/* <Switch>
-                {Object.values(lists).map(list => (
-                    <Route path={`/lists/${list.id}`}>
-                        <ListDisplay list={list}/>
-                    </Route>
-                ))}
-            </Switch> */}
+            <ListMenu onRerender={homeRerender} currentListState={[currentList, setCurrentList]} />
+
+            <ListDisplay onRerender={homeRerender} currentListState={[currentList, setCurrentList]} />
             <div className="right-panels">
                 <button>Create List</button>
                 <button>Create Team</button>

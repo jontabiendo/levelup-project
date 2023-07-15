@@ -3,58 +3,42 @@ import { useDispatch, useSelector } from "react-redux";
 import listsReducer, { setLists } from "../../store/lists";
 import DeleteListModal from "./deleteListModal";
 import OpenModalButton from "../OpenModalButton";
+import { updateListTasksThunk } from "../../store/lists";
 
 
 import './ListDisplay.css'
 
-const ListDisplay = ({ list, onRerender }) => {
+const ListDisplay = ({ list, onRerender, currentListState }) => {
     const dispatch = useDispatch()
-    const currentList = useSelector(state => state.lists.current_list)
-    const [showList, setShowList] = useState(list.id === currentList.id)
-    const [title, setTitle] = useState(list.title)
+    const [currentList, setCurrentList] = currentListState
+    const [title, setTitle] = useState(currentList.title)
     const [showComplete, setShowComplete] = useState(false)
-    const [description, setDescription] = useState(list.description)
-    const [isPublic, setIsPublic] = useState(list.public)
-    const [tasks, setTasks] = useState(list.tasks)
+    const [description, setDescription] = useState(currentList.description)
+    const [isPublic, setIsPublic] = useState(currentList.is_public)
+    const [tasks, setTasks] = useState(currentList.tasks)
     const listRef = useRef()
 
     useEffect(() => {
-        if (!showList) return;
-
-        const closeList = (e) => {
-          if (!listRef.current || !listRef.current.contains(e.target)) {
-            setShowList(false);
-          }
-        };
-
-        document.addEventListener("click", closeList);
-
-        return () => document.removeEventListener("click", closeList);
-    }, [showList]);
-
-    const openList = () => {
-        if (showList) return;
-        setShowList(true);
-    };
-
-    const listClassName = "list-display-div" + (showList ? "" : " hidden")
-
-    const handleSubmit = () => {
-
+        setTitle(currentList.title)
+        setDescription(currentList.description)
+        setIsPublic(currentList.is_public)
+        setTasks(currentList.tasks)
+    }, [currentList])
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        dispatch(updateListTasksThunk(currentList.id, title, description, isPublic, currentList.category))
     }
-
+    
     const newTask = (e) => {
         e.preventDefault()
     }
-
+    
+    console.log(isPublic)
     return (
         <>
-        <div className="list-menu-selector">
-            <button onClick={openList}>{title}</button>
-            <OpenModalButton modalComponent={<DeleteListModal onRerender={onRerender} list={list} />} buttonText={<i class="fa-solid fa-trash"></i>} />
-        </div>
-        <div className={listClassName} ref={listRef}>
-            <form>
+        <div className="list-display-div" ref={listRef}>
+            <form onSubmit={(e) => handleSubmit(e)}>
             <div className="list-header">
                 <label>Title: <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="title"></input></label>
                 <div id="check-field">
@@ -66,7 +50,9 @@ const ListDisplay = ({ list, onRerender }) => {
             <div id="check-field">
                     <input type="checkbox" onChange={(e) => setShowComplete(!showComplete)}></input>
                     <label>Show Completed</label>
-                </div>
+            </div>
+                <button type="submit">Save</button>
+            </form>
             <ul className="list-tasks-ul">
                 <h3>Tasks:</h3>
                 {tasks ? Object.values(tasks).map(task => (
@@ -99,7 +85,6 @@ const ListDisplay = ({ list, onRerender }) => {
                 )): null}
             </ul>
             <button onClick={(e) => newTask(e)}>+</button>
-            </form>
         </div>
         </>
     )

@@ -107,6 +107,11 @@ export const signUp = (first_name, last_name, email, password) => async (dispatc
 	if (response.ok) {
 		const data = await response.json();
 		dispatch(setUser(data));
+
+		const manData = manipulateData(data)
+		dispatch(setLists(manData.lists))
+		dispatch(setTeams(manData.teams))
+		
 		return null;
 	} else if (response.status < 500) {
 		const data = await response.json();
