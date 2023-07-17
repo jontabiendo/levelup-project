@@ -5,6 +5,8 @@ const ADD_TEAM_LIST = "list/ADD_TEAM_LIST";
 const SET_CURRENT_LIST = "list/SET_CURRENT_LIST";
 const DELETE_LIST = 'list/DELETE_LIST';
 const PUT_LIST = 'list/PUT_LIST';
+// const ADD_TASK = 'tasks/ADD_TASK';
+// const DELETE_TASK = '/tasks/DELETE_TASK'
 
 export const setLists = (lists) => ({
     type: SET_LISTS,
@@ -39,6 +41,18 @@ const updateList = (list) => ({
     type: PUT_LIST,
     list
 });
+
+// const addTaskAction = (listId, task) => ({
+//     type: ADD_TASK,
+//     listId,
+//     task
+// });
+
+// const deleteTaskAction = (taskId, listId) => ({
+//     type: DELETE_TASK,
+//     taskId,
+//     listId
+// })
 
 export const createListThunk = (title, category, description, isPublic) => async dispatch => {
     console.log("****DISPATCHING****", title, category, description, isPublic)
@@ -76,26 +90,53 @@ export const deleteListThunk = (listId) => async dispatch => {
     return null
 };
 
-export const updateListTasksThunk = (id, title, description, isPublic, category) => async dispatch => {
-    console.log(typeof isPublic)
-    const res = fetch(`/api/lists/${id}/edit`, {
+export const updateListTasksThunk = (list) => async dispatch => {
+    console.log(typeof is_public)
+    const res = await fetch(`/api/lists/${list.id}/edit`, {
         method: "PUT",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-            id,
-            title,
-            description,
-            isPublic,
-            category
+            ...list.title,
+            ...list.description,
+            ...list.is_public,
+            ...list.category
         })
     });
 
-    const data = (await res).json();
+    const data = await res.json();
+    // console.log(data)
 
     if (res.ok) {
         dispatch(updateList(data.list))
     }
 };
+
+// export const addTaskThunk = (listId) => async dispatch => {
+//     const res = await fetch(`/api/lists/${listId}/add-task`, {
+//         method: 'POST'
+//     });
+
+//     const data = await res.json();
+//     console.log(data)
+
+//     if (res.ok) {
+//         dispatch(addTaskAction(listId, data))
+//         return data
+//     } else return {"error": "Something went wrong adding a task to list"}
+// };
+
+// export const deleteTaskThunk = (taskId, listId) => async dispatch => {
+//     const res = await fetch(`/api/tasks/${taskId}/delete`, {
+//         method: "DELETE"
+//     });
+
+//     const data = await res.json();
+
+//     if (res.ok) {
+//         dispatch(deleteTaskAction(taskId, listId))
+//         return null
+//     } else return {"error": "Something went wrong deleting your task"}
+// }
 
 const initialState = {
     personal_lists: null,
@@ -143,6 +184,24 @@ const listsReducer = (state = initialState, action) => {
                     [action.list.id]: action.list
                 }
             }
+        // case ADD_TASK:
+        //     return {
+        //         ...state,
+        //         personal_lists: {
+        //             ...state.personal_lists,
+        //             [action.listId]: {
+        //                 ...state.personal_lists[action.listId],
+        //                 tasks: {
+        //                     ...state.personal_lists[action.listId].tasks,
+        //                     ...action.task
+        //                 }
+        //             }
+        //         }
+        //     }
+        // case DELETE_TASK:
+        //     let newState1 = {...state}
+        //     delete newState1.personal_lists[action.listId].tasks[action.taskId]
+        //     return newState1
         default:
             return state
     }

@@ -8,13 +8,17 @@ import ListDisplay from "../ListDisplay";
 // import { setCurrentList } from "../../store/lists";
 
 import './ListMenu.css'
+import DeleteListModal from "../ListDisplay/deleteListModal";
+import { setTasksAction } from "../../store/tasks";
 
-const ListMenu = ({ onRerender, currentListState }) => {
+const ListMenu = ({ homeRerender, currentListState }) => {
     const dispatch = useDispatch()
     const lists = useSelector(state => state.lists.personal_lists)
     const [currentList, setCurrentList] = currentListState
 
-    useEffect(() => {}, [lists])
+    useEffect(() => {
+        dispatch(setTasksAction(currentList.tasks))
+    }, [lists, currentList])
 
     return (
         <>
@@ -30,6 +34,7 @@ const ListMenu = ({ onRerender, currentListState }) => {
                         <button onClick={(e) => {
                             // dispatch(setCurrentList(list)) 
                             setCurrentList(list)}}>{list.title}</button>
+                            <OpenModalButton modalComponent={<DeleteListModal list={list} homeRerender={homeRerender}/>} buttonText={<i className="fa-solid fa-trash"></i>} />
                     </li>
                 ))}
             </ul>

@@ -5,7 +5,7 @@ import { deleteListThunk } from "../../store/lists";
 
 import "./ListDisplay.css"
 
-const DeleteListModal = ({ list, onRerender }) => {
+const DeleteListModal = ({ list, homeRerender }) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const [deleted, setDeleted] = useState(false)
@@ -17,7 +17,7 @@ const DeleteListModal = ({ list, onRerender }) => {
 
         setTimeout(closeModal, 3000)
 
-        onRerender()
+        homeRerender()
     };
 
     return (

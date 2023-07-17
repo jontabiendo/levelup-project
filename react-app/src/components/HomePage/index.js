@@ -6,12 +6,18 @@ import ListDisplay from "../ListDisplay";
 import TeamList from "../TeamList";
 
 import './HomePage.css'
+import { setTasksAction } from "../../store/tasks";
 
 const HomePage = () => {
+    const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
     const lists = useSelector(state => state.lists.personal_lists)
     const [currentList, setCurrentList] = useState(Object.values(lists)[0])
     const [reRender, setRerender] = useState(false)
+
+    useEffect(() => {
+        dispatch(setTasksAction(currentList.tasks))
+    }, [currentList])
     
     const homeRerender = () => {
         setRerender(!reRender)
@@ -21,7 +27,7 @@ const HomePage = () => {
 
     return (
         <div className="home-page-div">
-            <ListMenu onRerender={homeRerender} currentListState={[currentList, setCurrentList]} />
+            <ListMenu homeRerender={homeRerender} currentListState={[currentList, setCurrentList]} />
 
             <ListDisplay onRerender={homeRerender} currentListState={[currentList, setCurrentList]} />
             <div className="right-panels">

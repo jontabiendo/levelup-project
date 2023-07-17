@@ -1,4 +1,5 @@
 import { clearLists, setLists } from "./lists";
+import { setTasksAction } from "./tasks";
 import { clearTeams, setTeams } from "./teams";
 
 // constants
@@ -19,6 +20,7 @@ const manipulateData = (data) => {
 
 	objReturn.lists = data.lists;
 	objReturn.teams = data.teams;
+	// objReturn.tasks = Object.values(data.lists)[0].tasks
 	delete data.lists
 	delete data.teams
 	objReturn.user = data
@@ -42,6 +44,7 @@ export const authenticate = () => async (dispatch) => {
 		dispatch(setUser(manData.user));
 		dispatch(setLists(manData.lists));
 		dispatch(setTeams(manData.teams));
+		dispatch(setTasksAction(manData.tasks))
 	}
 };
 
