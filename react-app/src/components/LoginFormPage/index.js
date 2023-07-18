@@ -34,7 +34,7 @@ function LoginFormPage() {
         setErrors(data);
         return
       } else history.push('/lists')
-    }
+    // }
   };
 
   const guestSignin = async () => {
