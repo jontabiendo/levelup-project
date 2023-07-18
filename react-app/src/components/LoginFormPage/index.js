@@ -15,13 +15,26 @@ function LoginFormPage() {
 
   if (sessionUser) return <Redirect to="/" />;
 
+  // const validate = () => {
+  //   let errs = {}
+  //   console.log(email)
+  //   if (!email.endsWith(".com") && !email.endsWith(".net") && !email.endsWith('.org') && !email.endsWith('.io')) errs.email = "Invalid credentials"
+
+  //   setErrors(errs)
+  //   console.log(errs)
+  //   if (Object.values(errs).length === 0) return true
+  //   else return false
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = await dispatch(login(email, password));
-    if (data) {
-      setErrors(data);
+    // if (validate()) {
+      const data = await dispatch(login(email, password));
+      if (data) {
+        setErrors(data);
+        return
+      } else history.push('/lists')
     }
-    history.push('/lists')
   };
 
   const guestSignin = async () => {

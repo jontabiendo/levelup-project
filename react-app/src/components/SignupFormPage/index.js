@@ -35,8 +35,6 @@ function SignupFormPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const validated = validate()
-    console.log("validated?", validated)
     if (validate()) {
       console.log("logging in...")
         const data = await dispatch(signUp(firstName, lastName, email, password));
