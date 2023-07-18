@@ -4,6 +4,9 @@
     flex-direction: column;
     width: 50rem;
     height: 100%;
+    box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
+    border-radius: 1rem;
+    padding: 1rem;
 }
 
 .list-header {
@@ -22,9 +25,23 @@
 }
 
 .delete-modal-div {
-    background-color: white;
+    background-color: #FFF4CB;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 20rem;
-    height: 20rem;
+    height: 10rem;
+    box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.left-task-wrapper > input {
+    border: none;
+    background-color: transparent;
+}
+
+.list-item {
+    border-bottom: 1px solid #f5bbb1;
 }

@@ -7,13 +7,17 @@ const ADD_TEAM_LIST = "list/ADD_TEAM_LIST";
 const SET_CURRENT_LIST = "list/SET_CURRENT_LIST";
 const DELETE_LIST = 'list/DELETE_LIST';
 const PUT_LIST = 'list/PUT_LIST';
-// const ADD_TASK = 'tasks/ADD_TASK';
-// const DELETE_TASK = '/tasks/DELETE_TASK'
+const SIGNUP_LIST = "list/SIGN_UP"
 
 export const setLists = (lists) => ({
     type: SET_LISTS,
     lists
 });
+
+export const signupList = (list) => ({
+    type: SIGNUP_LIST,
+    list
+})
 
 const addPersonalList = (list) => ({
     type: ADD_PERSONAL_LIST,
@@ -101,7 +105,7 @@ export const updateListTasksThunk = (list, tasks) => async dispatch => {
             title: list.title,
             description: list.description,
             is_public: list.isPublic,
-            category: ("Work", "Work")
+            category: list.category
         })
     });
 
@@ -167,6 +171,11 @@ const listsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.lists
+            }
+        case SIGNUP_LIST:
+            return {
+                ...state,
+                personal_lists: {[action.list.id]: action.list}
             }
         case CLEAR_LISTS:
             return { ...initialState }

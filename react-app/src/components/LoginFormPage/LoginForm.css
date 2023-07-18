@@ -3,11 +3,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px dashed yellow;
-    background-color: #EFC400;
+    background-color: #FFF4CB;
     width: 40rem;
     margin: auto;
     height: 17rem;
+    box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
 }
 
 .login-form {
@@ -18,7 +18,7 @@
 }
 
 .login-form > label {
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display: flex;
     justify-content: space-between;
     width: 100%;

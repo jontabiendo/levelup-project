@@ -26,6 +26,7 @@ function LoginFormPage() {
 
   const guestSignin = async () => {
     await dispatch(login("demo@aa.io", "password"));
+    history.push('/lists')
   }
 
   return (
@@ -38,7 +39,7 @@ function LoginFormPage() {
           ))}
         </ul>
         <label>
-          Email
+          Email: 
           <input
             type="text"
             value={email}
@@ -47,7 +48,7 @@ function LoginFormPage() {
           />
         </label>
         <label>
-          Password
+          Password:
           <input
             type="password"
             value={password}

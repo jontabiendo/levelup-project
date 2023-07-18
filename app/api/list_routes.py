@@ -51,6 +51,21 @@ def get_lists():
 
     return {"lists": [list.to_dict() for list in lists]}
 
+@list_routes.route('/signup-list', methods=["POST"])
+def new_list_on_signup():
+    """
+    Create a new empty list on new user sign up
+    """
+    list = List(
+            title = "New List",
+            category = "",
+            description = "Description",
+            user_id = current_user.id
+        )
+
+    db.session.add(list)
+    db.session.commit()
+
 @list_routes.route('/new', methods=["POST"])
 # @login_required
 def post_list():

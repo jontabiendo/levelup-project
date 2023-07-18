@@ -2,9 +2,17 @@ from app.models import db, List, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_lists():
+    demo_list = List(
+        title = "demo list",
+        category = "Groceries",
+        description = "description",
+        is_public = False,
+        user_id = 1
+    )
+
     gandalf_personal_1 = List(
         title = "my daily list",
-        category = "",
+        category = "Personal",
         description = "Daily tasks",
         is_public= True,
         user_id = 2
@@ -12,7 +20,7 @@ def seed_lists():
 
     gandalf_personal_2 = List(
         title = "To defeat Sauron",
-        category = "work",
+        category = "Work",
         description = "Tasks to complete to save Middle Earth",
         is_public = False,
         user_id = 2
@@ -20,7 +28,7 @@ def seed_lists():
 
     fellowship_list = List(
         title = "Fellowship tasks",
-        category = "work",
+        category = "Work",
         description = "Tasks for Fellowship members",
         is_public = False,
         user_id = 2,
@@ -36,6 +44,7 @@ def seed_lists():
         team_id = 2
     )
 
+    db.session.add(demo_list)
     db.session.add(gandalf_personal_1)
     db.session.add(gandalf_personal_2)
     db.session.add(fellowship_list)

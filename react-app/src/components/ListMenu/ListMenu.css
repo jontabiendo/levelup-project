@@ -5,6 +5,10 @@
     width: 22rem;
     height: 100%;
     overflow: scroll;
+    overflow-x: hidden;
+    box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
+    border-radius: 1rem;
+    padding: 1rem;
 }
 
 #current-lists-ul {

@@ -10,4 +10,16 @@
     background-color: #FFF4CB;
     height: 100%;
     width: 22rem;
+    box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.right-panel-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }

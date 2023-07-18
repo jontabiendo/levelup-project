@@ -14,21 +14,37 @@ function SignupFormPage() {
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
 
   if (sessionUser) return <Redirect to="/" />;
 
+  const validate = () => {
+    let errs = {}
+    console.log(email)
+    if (!email.endsWith(".com") && !email.endsWith(".net") && !email.endsWith('.org') && !email.endsWith('.io')) errs.email = "Email must end in .com, .net, .org or .io"
+    if (firstName.length > 50) errs.firstName = "First Name can't be longer than 50 characters"
+    if (lastName.length > 50) errs.lastName = "Last Name can't be longer than 50 characters"
+    if (password !== confirmPassword) errs.password = "Passwords do not match"
+
+    setErrors(errs)
+    console.log(errs)
+    if (Object.values(errs).length === 0) return true
+    else return false
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
+
+    const validated = validate()
+    console.log("validated?", validated)
+    if (validate()) {
+      console.log("logging in...")
         const data = await dispatch(signUp(firstName, lastName, email, password));
         if (data) {
           setErrors(data)
         }
         history.push('/lists')
-    } else {
-        setErrors(['Confirm Password field must be the same as the Password field']);
-    }
+    } else return null
   };
 
   const guestSignin = async () => {
@@ -39,11 +55,9 @@ function SignupFormPage() {
     <div className="signup-form-div">
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit} id="signup-form">
-        <ul>
-          {errors.map((error, idx) => <li key={idx} className="errors">{error}</li>)}
-        </ul>
+        {errors.email && <p className="errors">{errors.email}</p>}
         <label>
-          Email
+          Email: 
           <input
             type="email"
             value={email}
@@ -51,8 +65,9 @@ function SignupFormPage() {
             required
           />
         </label>
+        {errors.firstName && <p className="errors">{errors.firstName}</p>}
         <label>
-          First Name
+          First Name: 
           <input
             type="text"
             value={firstName}
@@ -60,8 +75,9 @@ function SignupFormPage() {
             required
           />
         </label>
+        {errors.lastName && <p className="errors">{errors.lastName}</p>}
         <label>
-          Last Name
+          Last Name: 
           <input
             type="text"
             value={lastName}
@@ -69,8 +85,9 @@ function SignupFormPage() {
             required
           />
         </label>
+        {errors.password && <p className="errors">{errors.password}</p>}
         <label>
-          Password
+          Password: 
           <input
             type="password"
             value={password}
@@ -79,7 +96,7 @@ function SignupFormPage() {
           />
         </label>
         <label>
-          Confirm Password
+          Confirm Password: 
           <input
             type="password"
             value={confirmPassword}

@@ -31,8 +31,10 @@ const HomePage = () => {
 
             <ListDisplay onRerender={homeRerender} currentListState={[currentList, setCurrentList]} />
             <div className="right-panels">
-                <button>Create List</button>
-                <button>Create Team</button>
+                <div className="right-panel-buttons">
+                    <button>Create List</button>
+                    <button>Create Team</button>
+                </div>
                 <TeamList />
             </div>
         </div>

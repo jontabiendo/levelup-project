@@ -22,13 +22,16 @@ const DeleteListModal = ({ list, homeRerender }) => {
 
     return (
         <>
-            {!deleted ? (<div className={"delete-modal-div"}>
+            {!deleted ? (
+            <div className={"delete-modal-div"}>
                 <h2>Are you sure you want to remove your list {list.title}?</h2>
                 <button onClick={handleDelete}>Yes, remove this list</button>
                 <button onClick={closeModal}>No, keep this list</button>
             </div>) : (
                 <>
-                <h3>Deleting to do list...</h3>
+                <div className="delete-modal-div">
+                    <h3>Deleting to do list...</h3>
+                </div>
                 </>
             )}
         </>

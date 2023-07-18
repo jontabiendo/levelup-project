@@ -31,11 +31,14 @@
 }
 
 .profile-dropdown {
+  background-color: #FFF4CB;
   position: absolute;
   right: 0;
-  border: 1px dashed red;
+  color: black;
   display: flex;
   flex-direction: column;
+  box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
+  right: 0.5rem;
 }
 
 .hidden {

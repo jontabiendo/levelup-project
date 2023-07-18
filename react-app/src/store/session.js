@@ -1,4 +1,4 @@
-import { clearLists, setLists } from "./lists";
+import { clearLists, setLists, signupList } from "./lists";
 import { setTasksAction } from "./tasks";
 import { clearTeams, setTeams } from "./teams";
 
@@ -109,15 +109,14 @@ export const signUp = (first_name, last_name, email, password) => async (dispatc
 
 	if (response.ok) {
 		const data = await response.json();
-		dispatch(setUser(data));
 
-		const manData = manipulateData(data)
-		dispatch(setLists(manData.lists))
-		dispatch(setTeams(manData.teams))
+		dispatch(setUser(data.user));
+		dispatch(signupList(data.list))
 		
 		return null;
 	} else if (response.status < 500) {
 		const data = await response.json();
+		console.log(data)
 		if (data.errors) {
 			return data.errors;
 		}

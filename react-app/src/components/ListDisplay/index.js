@@ -6,6 +6,7 @@ import OpenModalButton from "../OpenModalButton";
 import { updateListTasksThunk } from "../../store/lists";
 import { addTaskThunk, deleteTaskThunk } from "../../store/tasks";
 import TaskTile from "../taskTile/taskTile";
+import { categories } from "../CreateListModal";
 
 
 import './ListDisplay.css'
@@ -17,7 +18,7 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
     const [showComplete, setShowComplete] = useState(false)
     const [description, setDescription] = useState(currentList.description)
     const [isPublic, setIsPublic] = useState(currentList.is_public)
-    console.log(isPublic)
+    const [category, setCategory] = useState(currentList.category)
     const [tasks, setTasks] = useState(currentList.tasks)
     const listRef = useRef()
 
@@ -26,6 +27,7 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
         setDescription(currentList.description)
         setIsPublic(currentList.is_public)
         setTasks(currentList.tasks)
+        setCategory(currentList.category)
     }, [currentList]);
     
     const handleSubmit = async (e) => {
@@ -35,9 +37,8 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
             title,
             description,
             isPublic,
-            category: currentList.category
+            category
         }
-        // console.log(list)
 
         dispatch(updateListTasksThunk(list, tasks))
     };
@@ -66,6 +67,15 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
                 </div>
             </div>
             <label>Description: <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="description"></input></label>
+            <label>Category: 
+                    <select onChange={(e) => setCategory(e.target.value)}>
+                        {categories.map(option => (
+                            category === option ? <option key={option} value={option} selected>{option}</option> : 
+                                <option key={option} value={option}>{option}</option>
+                            
+))}
+                    </select>
+                </label>
             <div id="check-field">
                     <input type="checkbox" onChange={(e) => setShowComplete(!showComplete)}></input>
                     <label>Show Completed</label>
