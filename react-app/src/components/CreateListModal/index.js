@@ -15,46 +15,55 @@ const CreateListModal = () => {
     const [category, setCategory] = useState("")
     const [description, setDescription] = useState("")
     const [isPublic, setIsPublic] = useState(false)
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState({})
     const { closeModal } = useModal()
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("****CONTACTING REDUCER", title, category, description, isPublic)
-        const data = await dispatch
-        (createListThunk(title, category, description, isPublic))
-        if (data) {
-            setErrors(data)
-        } else {
-            closeModal()
+        let errs = {}
+        
+        if (description.length > 50) {
+            errs.description = "Description can't be over 50 characters"
+        }
+        if (category.length === 0) {
+            errs.category = "Please select a category for your list"
+        }
+        setErrors(errs)
+        if (Object.values(errs).length) return null
+        else {
+            const data = await dispatch
+            (createListThunk(title, category, description, isPublic))
+            if (data) {
+                setErrors(data)
+            } else {
+                closeModal()
+            }
         }
     };
-
-    console.log(category, typeof category)
-
+    
+    // console.log(category, isPublic)
+    // console.log("category :", category.length)
+    
     return (
         <div className="newlist-form-wrapper">
             <h1>Create New List</h1>
             <form className='newlist-form' onSubmit={handleSubmit}>
-                <ul>
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
-                </ul>
+                {errors.description && <p className="errors">{errors.description}</p>}
                 <label>Title: 
                     <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
                 </label>
+                {errors.category && <p className="errors">{errors.category}</p>}
                 <label>Category: 
                     <select onChange={(e) => setCategory(e.target.value)}>
-                        <option value="categories" selected>categories</option>
+                        <option value="" selected>categories</option>
                         {categories.map(option => (
                             <option key={option} value={option}>{option}</option>
                         ))}
                     </select>
                 </label>
-                <label><input type="checkbox" value={isPublic} onChange={(e) => setIsPublic(!isPublic)} />Public</label><span>Setting this to public will allow friends to see this list</span>
+                <label><input type="checkbox" value={isPublic} onChange={(e) => setIsPublic(!isPublic)} />Public</label>
                 <label>Description:
-                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
+                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} required/>
                 </label>
                 <button type="submit">Create</button>
             </form>

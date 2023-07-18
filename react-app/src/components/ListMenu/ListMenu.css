@@ -1,9 +1,9 @@
 .list-menu-div {
-    background-color: white;
+    background-color: #FFF4CB;
     display: flex;
     flex-direction: column;
-    width: 16rem;
-    height: 28rem;
+    width: 22rem;
+    height: 100%;
     overflow: scroll;
 }
 

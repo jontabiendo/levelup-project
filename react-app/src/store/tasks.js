@@ -25,7 +25,7 @@ export const addTaskThunk = (listId) => async dispatch => {
     });
 
     const data = await res.json();
-    // console.log(data)
+    console.log(data)
 
     if (res.ok) {
         dispatch(addTaskAction(listId, data))

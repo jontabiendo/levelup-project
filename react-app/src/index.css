@@ -7,3 +7,8 @@ body {
 .errors {
     color: rgb(179, 0, 255);
 }
+
+button {
+    background-color: #110EA7;
+    color: #FFF4CB;
+}

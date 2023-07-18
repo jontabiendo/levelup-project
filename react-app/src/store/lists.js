@@ -1,3 +1,5 @@
+import { setTasksAction } from "./tasks";
+
 const SET_LISTS = "lists/SET_LIST";
 const CLEAR_LISTS = 'lists/DELETE_LIST';
 const ADD_PERSONAL_LIST = "list/ADD_PERSONAL_LIST";
@@ -90,24 +92,40 @@ export const deleteListThunk = (listId) => async dispatch => {
     return null
 };
 
-export const updateListTasksThunk = (list) => async dispatch => {
-    console.log(typeof is_public)
+export const updateListTasksThunk = (list, tasks) => async dispatch => {
+    console.log("******",list)
     const res = await fetch(`/api/lists/${list.id}/edit`, {
         method: "PUT",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-            ...list.title,
-            ...list.description,
-            ...list.is_public,
-            ...list.category
+            title: list.title,
+            description: list.description,
+            is_public: list.isPublic,
+            category: ("Work", "Work")
         })
     });
 
     const data = await res.json();
-    // console.log(data)
+    console.log(data)
 
     if (res.ok) {
         dispatch(updateList(data.list))
+    }
+
+    const tasksFetch = await fetch(`/api/lists/${list.id}/tasks/save`, {
+        method: "PUT",
+        headers: {"Content-Type": 'application/json'},
+        body: JSON.stringify({
+            tasks
+        })
+    })
+
+    const tasksData = await tasksFetch.json()
+    console.log(tasksData)
+
+    if (tasksFetch.ok) {
+        console.log("setting tasks")
+        dispatch(setTasksAction(tasksData))
     }
 };
 

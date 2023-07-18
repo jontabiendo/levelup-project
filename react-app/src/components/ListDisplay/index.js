@@ -5,6 +5,7 @@ import DeleteListModal from "./deleteListModal";
 import OpenModalButton from "../OpenModalButton";
 import { updateListTasksThunk } from "../../store/lists";
 import { addTaskThunk, deleteTaskThunk } from "../../store/tasks";
+import TaskTile from "../taskTile/taskTile";
 
 
 import './ListDisplay.css'
@@ -16,6 +17,7 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
     const [showComplete, setShowComplete] = useState(false)
     const [description, setDescription] = useState(currentList.description)
     const [isPublic, setIsPublic] = useState(currentList.is_public)
+    console.log(isPublic)
     const [tasks, setTasks] = useState(currentList.tasks)
     const listRef = useRef()
 
@@ -35,14 +37,9 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
             isPublic,
             category: currentList.category
         }
-        console.log(list)
+        // console.log(list)
 
         dispatch(updateListTasksThunk(list, tasks))
-    };
-
-    const saveTasks = async (e) => {
-        e.preventDefault()
-        console.log('saving tasks...')
     };
     
     const newTask = (e) => {
@@ -53,9 +50,10 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
     const deleteTask = (e, taskId) => {
         e.preventDefault()
         dispatch(deleteTaskThunk(taskId))
+        const newState = tasks
+        delete newState[taskId]
+        setTasks({...newState})
     }
-    
-    // console.log(isPublic)
     return (
         <>
         <div className="list-display-div" ref={listRef}>
@@ -63,7 +61,7 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
             <div className="list-header">
                 <label>Title: <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="title"></input></label>
                 <div id="check-field">
-                    <input type="checkbox" onChange={(e) => setIsPublic(!isPublic)}></input>
+                    <input type="checkbox" value={true} onChange={(e) => setIsPublic(!isPublic)}></input>
                     <label>Public</label>
                 </div>
             </div>
@@ -73,13 +71,11 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
                     <label>Show Completed</label>
             </div>
                 <button type="submit">Save</button>
-            </form>
-            <form onSubmit={(e) => newTask(e)}>
             <ul className="list-tasks-ul">
                 <h3>Tasks:</h3>
-                <button type="submit">Save tasks</button>
                 {tasks ? Object.values(tasks).map(task => (
                     <li key={task.id} className="list-item">
+                        {/* <TaskTile task={task} resetTasks={changeTaskState} /> */}
                         <div className="left-task-wrapper">
                         <input type="checkbox" onChange={(e) => setTasks({
                             ...tasks,
@@ -97,7 +93,13 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
                         })}></input>
                         </div>
                         <div className="right-task-wrapper">
-                            <select>
+                            <select onChange={(e) => setTasks({
+                                ...tasks,
+                                [task.id]: {
+                                    ...task,
+                                    priority: e.target.value
+                                }
+                            })}>
                                 {task.priority === 'low' ? <option value="low" selected>low</option> : <option value="low" >low</option>}
                                 {task.priority === 'medium' ? <option value="medium" selected>medium</option> : <option value="medium">medium</option>}
                                 {task.priority === 'high' ? <option value="high" selected>high</option> : <option value="high">high</option>}

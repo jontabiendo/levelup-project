@@ -1,9 +1,9 @@
 .list-display-div {
-    background-color: white;
+    background-color: #FFF4CB;
     display: flex;
     flex-direction: column;
-    width: 45rem;
-    height: 28rem;
+    width: 50rem;
+    height: 100%;
 }
 
 .list-header {
