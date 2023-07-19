@@ -56,7 +56,7 @@ function MenuButton({ user }) {
             </li>
           </div>
         ) : (
-          <div>
+          <div className={ulClassName}>
             <button onClick={() => {
               history.push('/login')
               setShowMenu(false)

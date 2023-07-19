@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch } from 'react-router-dom'
-import ListMenu from "../ListMenu";
-import ListDisplay from "../ListDisplay";
-import TeamList from "../TeamList";
-import OpenModalButton from "../OpenModalButton";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 import './landingPage.css'
 import img from '../../assets/pngegg (1).png'
 
-const LandingPage = () => {
+const LandingPage = ({ user }) => {
     const history = useHistory();
     const [start, setStart] = useState(false)
     const [newGame, setNewGame] = useState(false)
+
+    if (user) return <Redirect to="/lists" />
     return (
         <div className="landing-page-div">
             <h1>Welcome to LevelUp!</h1>

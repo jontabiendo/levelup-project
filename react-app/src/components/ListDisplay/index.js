@@ -13,6 +13,7 @@ import './ListDisplay.css'
 
 const ListDisplay = ({ list, onRerender, currentListState }) => {
     const dispatch = useDispatch()
+    const user = useSelector(state => state.session.user)
     const [currentList, setCurrentList] = currentListState
     const [title, setTitle] = useState(currentList.title)
     const [showComplete, setShowComplete] = useState(false)
@@ -129,7 +130,7 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
                                 {task.priority === 'medium' ? <option value="medium" selected>medium</option> : <option value="medium">medium</option>}
                                 {task.priority === 'high' ? <option value="high" selected>high</option> : <option value="high">high</option>}
                             </select>
-                            <button onClick={(e) => deleteTask(e, task.id, task.list_id)}><i className="fa-solid fa-trash"></i></button>
+                            {user.email === "demo@aa.io" ? null : (<button onClick={(e) => deleteTask(e, task.id, task.list_id)}><i className="fa-solid fa-trash"></i></button>)}
                         </div>
                     </li>
                 )): null}

@@ -9,6 +9,7 @@ import CreateListModal from "../CreateListModal";
 
 import './HomePage.css'
 import { setTasksAction } from "../../store/tasks";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 const HomePage = () => {
     const dispatch = useDispatch();
@@ -25,8 +26,6 @@ const HomePage = () => {
     const homeRerender = () => {
         setRerender(!reRender)
     }
-
-    if (!user) return null;
 
     return (
         <div className="home-page-div">
