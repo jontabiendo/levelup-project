@@ -4,6 +4,7 @@ import { useModal } from "../../context/Modal";
 import { deleteListThunk } from "../../store/lists";
 
 import "./ListDisplay.css"
+import img from "../../assets/naruto-run.gif"
 
 const DeleteListModal = ({ list, homeRerender }) => {
     const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const DeleteListModal = ({ list, homeRerender }) => {
             </div>) : (
                 <>
                 <div className="delete-modal-div">
+                    <img src={img} id="naruto-run"/>
                     <h3>Deleting to do list...</h3>
                 </div>
                 </>

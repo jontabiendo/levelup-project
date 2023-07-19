@@ -34,6 +34,7 @@ function MenuButton({ user }) {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
+    setShowMenu(false)
     history.push('/login')
   };
 

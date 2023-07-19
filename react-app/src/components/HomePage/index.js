@@ -14,6 +14,7 @@ const HomePage = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
     const lists = useSelector(state => state.lists.personal_lists)
+    const teams = useSelector(state => state.teams)
     const [currentList, setCurrentList] = useState(Object.values(lists)[0])
     const [reRender, setRerender] = useState(false)
 
@@ -37,7 +38,7 @@ const HomePage = () => {
                 <OpenModalButton modalComponent={<CreateListModal />} buttonText="Create List" />
                     <button onClick={(e) => alert("Feature coming soon")}>Create Team</button>
                 </div>
-                <TeamList />
+                <TeamList teams={teams} />
             </div>
         </div>
     )

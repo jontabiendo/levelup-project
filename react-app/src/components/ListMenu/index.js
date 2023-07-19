@@ -31,9 +31,11 @@ const ListMenu = ({ homeRerender, currentListState }) => {
                 {Object.values(lists).map(list => (
                     <li key={list.id}>
                         <div className="li-div">
-                            <button onClick={(e) => {
+                            {currentList.id === list.id ? (<button className={"active"} onClick={(e) => {
                             setCurrentList(list)}}>{list.title}
-                            </button>
+                            </button>) : (<button onClick={(e) => {
+                            setCurrentList(list)}}>{list.title}
+                            </button>)}
                             <OpenModalButton modalComponent={<DeleteListModal list={list} homeRerender={homeRerender}/>} buttonText={<i className="fa-solid fa-trash"></i>} />
                         </div>
                     </li>

@@ -55,10 +55,13 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
         delete newState[taskId]
         setTasks({...newState})
     }
+
+    const taskClassname = "list-item" + (!showComplete ? "" : " hidden")
+
     return (
         <>
         <div className="list-display-div" ref={listRef}>
-            <form onSubmit={(e) => handleSubmit(e)}>
+            <form id="list-display-form" onSubmit={(e) => handleSubmit(e)}>
             <div className="list-header">
                 <label>Title: <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="title"></input></label>
                 <div id="check-field">
@@ -67,35 +70,44 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
                 </div>
             </div>
             <label>Description: 
-                <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="description" />
             </label>
-            <label>Category: 
+                <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="description" />
+            <div className="list-detail-footer">
+                <label>Category: 
                     <select onChange={(e) => setCategory(e.target.value)}>
                         {categories.map(option => (
                             category === option ? <option key={option} value={option} selected>{option}</option> : 
-                                <option key={option} value={option}>{option}</option>
-                            
-))}
+                            <option key={option} value={option}>{option}</option>
+                            ))}
                     </select>
                 </label>
-            <div id="check-field">
-                    <input type="checkbox" onChange={(e) => setShowComplete(!showComplete)}></input>
-                    <label>Show Completed</label>
-            </div>
                 <button type="submit">Save</button>
+            </div>
             <ul className="list-tasks-ul">
-                <h3>Tasks:</h3>
+                <div id="tasks-headers">
+                    <h3>Tasks:</h3>
+                    <div id="check-field">
+                        <input type="checkbox" onChange={(e) => setShowComplete(!showComplete)}></input>
+                        <label>Show Completed</label>
+                    </div>
+                </div>
                 {tasks ? Object.values(tasks).map(task => (
-                    <li key={task.id} className="list-item">
-                        {/* <TaskTile task={task} resetTasks={changeTaskState} /> */}
+                    <li key={task.id} className={task.is_complete === false || (showComplete === true && task.is_complete === true) ? "list-item" : "hidden"}>
+                        {console.log(task)}
                         <div className="left-task-wrapper">
-                        <input type="checkbox" onChange={(e) => setTasks({
+                        {task.is_complete ? (<input type="checkbox" onChange={(e) => setTasks({
                             ...tasks,
                             [task.id]: {
                                 ...task,
                                 is_complete: !tasks[task.id].is_complete
                             }
-                        })}></input>
+                        })} checked></input>) : (<input type="checkbox" onChange={(e) => setTasks({
+                            ...tasks,
+                            [task.id]: {
+                                ...task,
+                                is_complete: !tasks[task.id].is_complete
+                            }
+                        })}></input>)}
                         {task.description.length > 50 && alert("Description must be less than 50 characters")}
                         <input type="text" value={task.description} onChange={(e) => setTasks({
                             ...tasks,
@@ -103,7 +115,7 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
                                 ...task,
                                 description: e.target.value
                             }
-                        })} maxLength={50} size={80}></input>
+                        })} maxLength={50} size={50}></input>
                         </div>
                         <div className="right-task-wrapper">
                             <select onChange={(e) => setTasks({
@@ -122,7 +134,7 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
                     </li>
                 )): null}
             </ul>
-            <button onClick={(e) => newTask(e)}>+</button>
+            <button id="add-task-button" onClick={(e) => newTask(e)}>+</button>
                 </form>
         </div>
         </>

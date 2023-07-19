@@ -2,7 +2,7 @@
     background-color: #FFF4CB;
     display: flex;
     flex-direction: column;
-    width: 50rem;
+    width: 55rem;
     height: 100%;
     box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
     border-radius: 1rem;
@@ -30,16 +30,20 @@
 }
 
 .delete-modal-div {
-    background-color: #FFF4CB;
+    background-color: #fcfcfc;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 20rem;
-    height: 10rem;
+    width: 30rem;
+    height: 20rem;
     box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
     border-radius: 1rem;
     padding: 1rem;
+}
+
+.left-task-wrapper {
+    display: flex;
 }
 
 .left-task-wrapper > input {
@@ -49,4 +53,58 @@
 
 .list-item {
     border-bottom: 1px solid #f5bbb1;
+}
+
+.list-tasks-ul {
+    padding-left: 0;
+}
+
+.right-task-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.right-task-wrapper > select {
+    height: 1.5rem;
+}
+
+.right-task-wrapper > button {
+    margin: 0;
+}
+
+#list-display-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+label {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+#tasks-headers {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-detail-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#add-task-button {
+    height: 2rem;
+    width: 4rem;
+}
+
+#naruto-run {
+    height: 5rem;
+    width: 5rem;
 }

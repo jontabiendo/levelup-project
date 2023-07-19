@@ -26,3 +26,8 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+.active {
+    background-color: #ff3aad;
+    color: #fff1c8;
+}
