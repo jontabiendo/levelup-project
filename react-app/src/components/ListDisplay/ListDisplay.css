@@ -9,6 +9,11 @@
     padding: 1rem;
 }
 
+.list-display-div > form {
+    display: flex;
+    flex-direction: column;
+}
+
 .list-header {
     display: flex;
     justify-content: space-between;

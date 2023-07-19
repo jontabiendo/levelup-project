@@ -39,8 +39,19 @@
   flex-direction: column;
   box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
   right: 0.5rem;
+  /* color: #FFF4CB; */
+  padding: 0.5rem 1rem;
 }
 
 .hidden {
   display: none;
+}
+
+.user-nav-div {
+  list-style: none;
+  height: 8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
 }

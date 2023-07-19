@@ -66,7 +66,9 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
                     <label>Public</label>
                 </div>
             </div>
-            <label>Description: <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="description"></input></label>
+            <label>Description: 
+                <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="description" />
+            </label>
             <label>Category: 
                     <select onChange={(e) => setCategory(e.target.value)}>
                         {categories.map(option => (
@@ -94,13 +96,14 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
                                 is_complete: !tasks[task.id].is_complete
                             }
                         })}></input>
+                        {task.description.length > 50 && alert("Description must be less than 50 characters")}
                         <input type="text" value={task.description} onChange={(e) => setTasks({
                             ...tasks,
                             [task.id]: {
                                 ...task,
                                 description: e.target.value
                             }
-                        })}></input>
+                        })} maxLength={50} size={80}></input>
                         </div>
                         <div className="right-task-wrapper">
                             <select onChange={(e) => setTasks({

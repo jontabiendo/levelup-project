@@ -7,6 +7,7 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import Background from "./components/Background";
 import HomePage from "./components/HomePage";
+import LandingPage from "./components/LandingPage";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function App() {
@@ -25,6 +26,9 @@ function App() {
       <Background />
       {isLoaded && (
         <>
+        <Route exact path='/'>
+          <LandingPage />
+        </Route>
         <Route path='/lists'>
           <HomePage />
         </Route>
