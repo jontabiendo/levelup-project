@@ -8,7 +8,8 @@ import Navigation from "./components/Navigation";
 import Background from "./components/Background";
 import HomePage from "./components/HomePage";
 import LandingPage from "./components/LandingPage";
-import { Redirect, useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,11 +28,11 @@ function App() {
       {isLoaded && (
         <>
         <Route exact path='/'>
-          <LandingPage user={user} />
+          <LandingPage />
         </Route>
-        {user ? <Route path='/lists'>
+        <Route path='/lists'>
           <HomePage />
-        </Route> : <Redirect to="/" />}
+        </Route>
         <Switch>
           <Route path="/login" >
             <LoginFormPage />
@@ -39,7 +40,7 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          {user ? <Redirect to="/lists" /> : <Redirect to='/' />}
+          {/* {user ? <Redirect to="/lists" /> : <Redirect to='/' />} */}
         </Switch>
         </>
       )}

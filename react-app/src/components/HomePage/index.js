@@ -22,6 +22,8 @@ const HomePage = () => {
     useEffect(() => {
         dispatch(setTasksAction(currentList.tasks))
     }, [currentList])
+
+    if (!currentList) return null
     
     const homeRerender = () => {
         setRerender(!reRender)
