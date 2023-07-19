@@ -46,11 +46,7 @@ function LoginFormPage() {
     <div className="login-form-div">
       <h1>Log In</h1>
       <form onSubmit={handleSubmit} className="login-form">
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx} className="errors">{error}</li>
-          ))}
-        </ul>
+        {errors.errors && <p className="errors">Invalid credentials</p>}
         <label>
           Email: 
           <input

@@ -47,19 +47,25 @@ function MenuButton({ user }) {
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
-            <li>{user.first_name}</li>
+          <div className="user-nav-div">
+            <li>Hello, {user.first_name}</li>
             <li>{user.email}</li>
             <li>
               <button onClick={handleLogout}>Log Out</button>
             </li>
-          </>
+          </div>
         ) : (
-          <>
-            <button onClick={() => history.push('/login')} className="nav-button">Log In</button>
+          <div>
+            <button onClick={() => {
+              history.push('/login')
+              setShowMenu(false)
+              }} className="nav-button">Log In</button>
 
-            <button onClick={() => history.push('/signup')} className="nav-button">Sign Up</button>
-          </>
+            <button onClick={() => {
+              history.push('/signup')
+              setShowMenu(false)
+              }} className="nav-button">Sign Up</button>
+          </div>
         )}
       </ul>
     </>

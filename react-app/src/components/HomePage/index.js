@@ -4,6 +4,8 @@ import { Route, Switch } from 'react-router-dom'
 import ListMenu from "../ListMenu";
 import ListDisplay from "../ListDisplay";
 import TeamList from "../TeamList";
+import OpenModalButton from "../OpenModalButton";
+import CreateListModal from "../CreateListModal";
 
 import './HomePage.css'
 import { setTasksAction } from "../../store/tasks";
@@ -32,8 +34,8 @@ const HomePage = () => {
             <ListDisplay onRerender={homeRerender} currentListState={[currentList, setCurrentList]} />
             <div className="right-panels">
                 <div className="right-panel-buttons">
-                    <button>Create List</button>
-                    <button>Create Team</button>
+                <OpenModalButton modalComponent={<CreateListModal />} buttonText="Create List" />
+                    <button onClick={(e) => alert("Feature coming soon")}>Create Team</button>
                 </div>
                 <TeamList />
             </div>

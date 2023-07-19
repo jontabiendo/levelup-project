@@ -16,6 +16,11 @@
     flex-direction: column;
 }
 
+.li-div {
+    display: flex;
+    justify-content: space-between;
+}
+
 .list-menu-header {
     display: flex;
     flex-direction: row;

@@ -6,7 +6,7 @@ def seed_tasks():
         description = "Say 'Fool of a Took'",
         priority = "high",
         is_complete = False,
-        list_id = 1,
+        list_id = 2,
         user_id = 2
     )
 
@@ -14,7 +14,7 @@ def seed_tasks():
         description = "Speak in riddles",
         priority = "medium",
         is_complete = False,
-        list_id = 1,
+        list_id = 2,
         user_id = 2
     )
 
@@ -22,7 +22,7 @@ def seed_tasks():
         description = "Worry about Frodo",
         priority = "low",
         is_complete = True,
-        list_id = 1,
+        list_id = 2,
         user_id = 2
     )
 
@@ -30,7 +30,7 @@ def seed_tasks():
         description = "Become 'Gandalf the White'",
         priority = "high",
         is_complete = False,
-        list_id = 2,
+        list_id = 3,
         user_id = 2
     )
 
@@ -38,7 +38,7 @@ def seed_tasks():
         description = "Offer Frodo my bow",
         priority = "medium",
         is_complete = False,
-        list_id = 3,
+        list_id = 4,
         user_id = 3
     )
 
@@ -46,7 +46,7 @@ def seed_tasks():
         description = "Plunge Middle Earth into darkness",
         priority = "High",
         is_complete = False,
-        list_id = 4,
+        list_id = 5,
         user_id = 4
     )
 

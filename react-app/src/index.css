@@ -2,6 +2,7 @@
 body {
     width: 100%;
     margin: 0;
+    font-family: 'Press Start 2P', cursive;
 }
 
 .errors {
@@ -11,4 +12,14 @@ body {
 button {
     background-color: #110EA7;
     color: #FFF4CB;
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+}
+
+input, textarea, select, button {
+    font-family: inherit;
+}
+
+button:hover {
+    cursor: pointer;
 }

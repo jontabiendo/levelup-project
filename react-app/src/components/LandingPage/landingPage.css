@@ -1,0 +1,32 @@
+.landing-page-div {
+    background-color: #FFF4CB;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50rem;
+    height: 100%;
+    box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 0 auto;
+    color: #2a2a5c;
+}
+
+.hover-img {
+    height: 1rem;
+    width: 1rem;
+    margin-right: 1rem;
+}
+
+.landing-button-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: #752dc9;
+}
+
+.landing-button-div:hover {
+    cursor: pointer;
+}

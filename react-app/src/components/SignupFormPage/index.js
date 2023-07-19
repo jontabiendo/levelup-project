@@ -24,7 +24,8 @@ function SignupFormPage() {
     if (!email.endsWith(".com") && !email.endsWith(".net") && !email.endsWith('.org') && !email.endsWith('.io')) errs.email = "Email must end in .com, .net, .org or .io"
     if (firstName.length > 50) errs.firstName = "First Name can't be longer than 50 characters"
     if (lastName.length > 50) errs.lastName = "Last Name can't be longer than 50 characters"
-    if (password !== confirmPassword) errs.password = "Passwords do not match"
+    if (password.length <= 5) errs.password = "Password must be minimum of 6 characters"
+    else if (password !== confirmPassword) errs.password = "Passwords do not match"
 
     setErrors(errs)
     console.log(errs)
