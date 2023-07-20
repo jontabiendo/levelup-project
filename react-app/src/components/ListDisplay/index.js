@@ -109,8 +109,7 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
                                 is_complete: !tasks[task.id].is_complete
                             }
                         })}></input>)}
-                        {task.description.length > 50 && alert("Description must be less than 50 characters")}
-                        <input type="text" value={task.description} onChange={(e) => setTasks({
+                        <input onKeyDown={task.description.length === 50 ? alert("You have reached the limit of 50 characters") : ""} type="text" value={task.description} onChange={(e) => setTasks({
                             ...tasks,
                             [task.id]: {
                                 ...task,
@@ -130,7 +129,7 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
                                 {task.priority === 'medium' ? <option value="medium" selected>medium</option> : <option value="medium">medium</option>}
                                 {task.priority === 'high' ? <option value="high" selected>high</option> : <option value="high">high</option>}
                             </select>
-                            {user.email === "demo@aa.io" ? null : (<button onClick={(e) => deleteTask(e, task.id, task.list_id)}><i className="fa-solid fa-trash"></i></button>)}
+                            {user && user.email === "demo@aa.io" ? null : (<button onClick={(e) => deleteTask(e, task.id, task.list_id)}><i className="fa-solid fa-trash"></i></button>)}
                         </div>
                     </li>
                 )): null}

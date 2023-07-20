@@ -30,6 +30,8 @@ function LoginFormPage() {
     e.preventDefault();
     // if (validate()) {
       const data = await dispatch(login(email, password));
+
+      const res = await data
       if (data) {
         setErrors(data);
         return
@@ -38,8 +40,12 @@ function LoginFormPage() {
   };
 
   const guestSignin = async () => {
-    await dispatch(login("demo@aa.io", "password"));
-    history.push('/lists')
+    const data = await dispatch(login("demo@aa.io", "password"));
+    const res = await data
+      if (data) {
+        setErrors(data);
+        return
+      } else history.push('/lists')
   }
 
   return (

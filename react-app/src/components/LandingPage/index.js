@@ -10,7 +10,7 @@ const LandingPage = ({ user }) => {
     const [start, setStart] = useState(false)
     const [newGame, setNewGame] = useState(false)
 
-    if (user) return <Redirect to="/lists" />
+    // if (user) return <Redirect to="/lists" />
     return (
         <div className="landing-page-div">
             <h1>Welcome to LevelUp!</h1>

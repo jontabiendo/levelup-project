@@ -20,7 +20,7 @@ const teamsReducer = (state = initialState, action) => {
                 ...action.teams
             }
         case CLEAR_TEAMS:
-            return { ...initialState }
+            return {}
         default:
             return state
     }

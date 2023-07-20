@@ -21,6 +21,7 @@ const HomePage = () => {
 
     useEffect(() => {
         dispatch(setTasksAction(currentList.tasks))
+        if (!user) return <Redirect to="/login" />
     }, [currentList])
 
     if (!currentList) return null
@@ -28,6 +29,7 @@ const HomePage = () => {
     const homeRerender = () => {
         setRerender(!reRender)
     }
+
 
     return (
         <div className="home-page-div">

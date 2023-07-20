@@ -4,7 +4,7 @@ import { logout } from "../../store/session";
 // import OpenModalButton from "../OpenModalButton";
 // import LoginFormModal from "../LoginFormModal";
 // import SignupFormModal from "../SignupFormModal";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Redirect, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function MenuButton({ user }) {
   const dispatch = useDispatch();
@@ -34,8 +34,9 @@ function MenuButton({ user }) {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
+    history.push('/')
     setShowMenu(false)
-    history.push('/login')
+    // return <Redirect to="/login" />
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -46,9 +47,9 @@ function MenuButton({ user }) {
       <button id='menu-button' onClick={openMenu}>
       <i className="fa-solid fa-bars fa-2xl"></i>
       </button>
-      <ul className={ulClassName} ref={ulRef}>
+      <ul ref={ulRef}>
         {user ? (
-          <div className="user-nav-div">
+          <div className={ulClassName}>
             <li>Hello, {user.first_name}</li>
             <li>{user.email}</li>
             <li>

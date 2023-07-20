@@ -15,11 +15,14 @@ function App() {
   const dispatch = useDispatch();
   const history = useHistory()
   const [isLoaded, setIsLoaded] = useState(false);
-  const user = useSelector(state => state.session.user)
+  // const user = useSelector(state => state.session.user)
+
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
-    if (user) history.push('/lists')
+    // if (user) history.push('/lists')
   }, [dispatch]);
+
+  // {user ? (<Redirect to="/lists" />) : (<Redirect to='/' />)}
 
   return (
     <>
@@ -27,20 +30,19 @@ function App() {
       <Background />
       {isLoaded && (
         <>
+        <Switch>
         <Route exact path='/'>
           <LandingPage />
         </Route>
         <Route path='/lists'>
           <HomePage />
         </Route>
-        <Switch>
           <Route path="/login" >
             <LoginFormPage />
           </Route>
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          {/* {user ? <Redirect to="/lists" /> : <Redirect to='/' />} */}
         </Switch>
         </>
       )}

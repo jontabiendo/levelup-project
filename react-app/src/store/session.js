@@ -40,6 +40,7 @@ export const authenticate = () => async (dispatch) => {
 			return;
 		}
 		const manData = manipulateData(data)
+		console.log("***", manData, "***")
 
 		dispatch(setUser(manData.user));
 		dispatch(setLists(manData.lists));
@@ -62,11 +63,13 @@ export const login = (email, password) => async (dispatch) => {
 
 	if (response.ok) {
 		const data = await response.json();
-		dispatch(setUser(data));
-
+		
 		const manData = manipulateData(data)
+		console.log("***", manData, "***")
+		console.log("***", data, "***")
 		dispatch(setLists(manData.lists))
 		dispatch(setTeams(manData.teams))
+		dispatch(setUser(data));
 		return null;
 
 	} else if (response.status < 500) {
@@ -110,8 +113,8 @@ export const signUp = (first_name, last_name, email, password) => async (dispatc
 	if (response.ok) {
 		const data = await response.json();
 
-		dispatch(setUser(data.user));
 		dispatch(signupList(data.list))
+		dispatch(setUser(data.user));
 		
 		return null;
 	} else if (response.status < 500) {

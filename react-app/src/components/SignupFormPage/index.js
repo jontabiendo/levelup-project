@@ -41,6 +41,7 @@ function SignupFormPage() {
         const data = await dispatch(signUp(firstName, lastName, email, password));
         if (data) {
           setErrors(data)
+          return
         }
         history.push('/lists')
     } else return null
@@ -48,6 +49,7 @@ function SignupFormPage() {
 
   const guestSignin = async () => {
     await dispatch(login("demo@aa.io", "password"));
+    history.push('/lists')
   }
 
   return (
