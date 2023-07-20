@@ -9,7 +9,6 @@ const rootReducer = combineReducers({
   session,
   lists: listsReducer,
   teams: teamsReducer,
-  // tasks: tasksReducer
 });
 
 let enhancer;

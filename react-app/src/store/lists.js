@@ -7,7 +7,9 @@ const ADD_TEAM_LIST = "list/ADD_TEAM_LIST";
 const SET_CURRENT_LIST = "list/SET_CURRENT_LIST";
 const DELETE_LIST = 'list/DELETE_LIST';
 const PUT_LIST = 'list/PUT_LIST';
-const SIGNUP_LIST = "list/SIGN_UP"
+const SIGNUP_LIST = "list/SIGN_UP";
+const ADD_TASK = 'tasks/ADD_TASK';
+const DELETE_TASK = '/tasks/DELETE_TASK';
 
 export const setLists = (lists) => ({
     type: SET_LISTS,
@@ -48,17 +50,17 @@ const updateList = (list) => ({
     list
 });
 
-// const addTaskAction = (listId, task) => ({
-//     type: ADD_TASK,
-//     listId,
-//     task
-// });
+const addTaskAction = (listId, task) => ({
+    type: ADD_TASK,
+    listId,
+    task
+});
 
-// const deleteTaskAction = (taskId, listId) => ({
-//     type: DELETE_TASK,
-//     taskId,
-//     listId
-// })
+const deleteTaskAction = (taskId, listId) => ({
+    type: DELETE_TASK,
+    taskId,
+    listId
+});
 
 export const createListThunk = (title, category, description, isPublic) => async dispatch => {
     const res = await fetch(`/api/lists/new`, {
@@ -128,6 +130,32 @@ export const updateListTasksThunk = (list, tasks) => async dispatch => {
     }
 };
 
+export const addTaskThunk = (listId) => async dispatch => {
+    const res = await fetch(`/api/lists/${listId}/add-task`, {
+        method: 'POST'
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+        dispatch(addTaskAction(listId, data))
+        return data
+    } else return {"error": "Something went wrong adding a task to list"}
+};
+
+export const deleteTaskThunk = (taskId, listId) => async dispatch => {
+    const res = await fetch(`/api/tasks/${taskId}/delete`, {
+        method: "DELETE"
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+        dispatch(deleteTaskAction(taskId, listId))
+        return null
+    } else return {"error": "Something went wrong deleting your task"}
+};
+
 const initialState = {
     personal_lists: null,
     team_lists: null
@@ -179,24 +207,24 @@ const listsReducer = (state = initialState, action) => {
                     [action.list.id]: action.list
                 }
             }
-        // case ADD_TASK:
-        //     return {
-        //         ...state,
-        //         personal_lists: {
-        //             ...state.personal_lists,
-        //             [action.listId]: {
-        //                 ...state.personal_lists[action.listId],
-        //                 tasks: {
-        //                     ...state.personal_lists[action.listId].tasks,
-        //                     ...action.task
-        //                 }
-        //             }
-        //         }
-        //     }
-        // case DELETE_TASK:
-        //     let newState1 = {...state}
-        //     delete newState1.personal_lists[action.listId].tasks[action.taskId]
-        //     return newState1
+        case ADD_TASK:
+            return {
+                ...state,
+                personal_lists: {
+                    ...state.personal_lists,
+                    [action.listId]: {
+                        ...state.personal_lists[action.listId],
+                        tasks: {
+                            ...state.personal_lists[action.listId].tasks,
+                            ...action.task
+                        }
+                    }
+                }
+            }
+        case DELETE_TASK:
+            let newState1 = {...state}
+            delete newState1.personal_lists[action.listId].tasks[action.taskId]
+            return newState1
         default:
             return state
     }

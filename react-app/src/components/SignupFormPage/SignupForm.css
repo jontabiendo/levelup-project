@@ -16,6 +16,7 @@
     justify-content: space-around;
     align-items: center;
     height: 18rem;
+    margin-bottom: 2rem;
 }
 
 #signup-form > label {

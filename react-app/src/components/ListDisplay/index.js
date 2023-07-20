@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import listsReducer, { setLists } from "../../store/lists";
 import DeleteListModal from "./deleteListModal";
 import OpenModalButton from "../OpenModalButton";
-import { updateListTasksThunk } from "../../store/lists";
-import { addTaskThunk, deleteTaskThunk } from "../../store/tasks";
+import { updateListTasksThunk, addTaskThunk, deleteTaskThunk } from "../../store/lists";
+// import { addTaskThunk, deleteTaskThunk } from "../../store/tasks";
 import TaskTile from "../taskTile/taskTile";
 import { categories } from "../CreateListModal";
 
@@ -49,9 +49,9 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
         dispatch(addTaskThunk(currentList.id)).then((data) => setTasks({...tasks, ...data}))
     };
 
-    const deleteTask = (e, taskId) => {
+    const deleteTask = (e, taskId, listId) => {
         e.preventDefault()
-        dispatch(deleteTaskThunk(taskId))
+        dispatch(deleteTaskThunk(taskId, listId))
         const newState = tasks
         delete newState[taskId]
         setTasks({...newState})
