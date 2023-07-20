@@ -16,16 +16,12 @@ def save_tasks(listId):
     """
     tasks_to_update = Task.query.filter(Task.list_id == listId).all()
     to_update_dict = {str(task.id): task for task in tasks_to_update}
-    print("***", to_update_dict,"***")
     req = request.get_json()
 
     updated_tasks = req['tasks']
-    print("****", updated_tasks, "****")
 
     for idx, task in updated_tasks.items():
         del task['comments']
-        print(idx, task, "*******************")
-        print(task['description'])
         to_update_dict[idx].description = task['description']
         to_update_dict[idx].priority = task['priority']
         to_update_dict[idx].is_complete = task['is_complete']
@@ -47,7 +43,6 @@ def get_lists():
     Query for logged in user's lists and return them in a list of dictionaries
     """
     lists = List.query.filter(List.user_id == current_user.id).all()
-    print(lists)
 
     return {"lists": [list.to_dict() for list in lists]}
 
@@ -96,7 +91,6 @@ def edit_list(listId):
     Edit the currently viewed list for the logged in user
     """
     list = List.query.get(listId)
-    print("*****",request.data,"*********")
 
     if list is None:
         return {'errors': "List does not exist"}, 404
@@ -105,7 +99,6 @@ def edit_list(listId):
     
     form = ListForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    print(form.title.data)
 
     if form.validate():
         list = List.query.get(listId)

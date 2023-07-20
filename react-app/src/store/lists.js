@@ -61,7 +61,6 @@ const updateList = (list) => ({
 // })
 
 export const createListThunk = (title, category, description, isPublic) => async dispatch => {
-    console.log("****DISPATCHING****", title, category, description, isPublic)
     const res = await fetch(`/api/lists/new`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -97,7 +96,6 @@ export const deleteListThunk = (listId) => async dispatch => {
 };
 
 export const updateListTasksThunk = (list, tasks) => async dispatch => {
-    console.log("******",list)
     const res = await fetch(`/api/lists/${list.id}/edit`, {
         method: "PUT",
         headers: {"Content-Type": "application/json"},
@@ -110,7 +108,6 @@ export const updateListTasksThunk = (list, tasks) => async dispatch => {
     });
 
     const data = await res.json();
-    console.log(data)
 
     if (res.ok) {
         dispatch(updateList(data.list))
@@ -125,40 +122,11 @@ export const updateListTasksThunk = (list, tasks) => async dispatch => {
     })
 
     const tasksData = await tasksFetch.json()
-    console.log(tasksData)
 
     if (tasksFetch.ok) {
-        console.log("setting tasks")
         dispatch(setTasksAction(tasksData))
     }
 };
-
-// export const addTaskThunk = (listId) => async dispatch => {
-//     const res = await fetch(`/api/lists/${listId}/add-task`, {
-//         method: 'POST'
-//     });
-
-//     const data = await res.json();
-//     console.log(data)
-
-//     if (res.ok) {
-//         dispatch(addTaskAction(listId, data))
-//         return data
-//     } else return {"error": "Something went wrong adding a task to list"}
-// };
-
-// export const deleteTaskThunk = (taskId, listId) => async dispatch => {
-//     const res = await fetch(`/api/tasks/${taskId}/delete`, {
-//         method: "DELETE"
-//     });
-
-//     const data = await res.json();
-
-//     if (res.ok) {
-//         dispatch(deleteTaskAction(taskId, listId))
-//         return null
-//     } else return {"error": "Something went wrong deleting your task"}
-// }
 
 const initialState = {
     personal_lists: null,

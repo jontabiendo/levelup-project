@@ -15,20 +15,8 @@ function LoginFormPage() {
 
   if (sessionUser) return <Redirect to="/lists" />;
 
-  // const validate = () => {
-  //   let errs = {}
-  //   console.log(email)
-  //   if (!email.endsWith(".com") && !email.endsWith(".net") && !email.endsWith('.org') && !email.endsWith('.io')) errs.email = "Invalid credentials"
-
-  //   setErrors(errs)
-  //   console.log(errs)
-  //   if (Object.values(errs).length === 0) return true
-  //   else return false
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (validate()) {
       const data = await dispatch(login(email, password));
 
       const res = await data
@@ -36,7 +24,6 @@ function LoginFormPage() {
         setErrors(data);
         return
       } else history.push('/lists')
-    // }
   };
 
   const guestSignin = async () => {

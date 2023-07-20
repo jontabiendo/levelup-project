@@ -20,7 +20,6 @@ function SignupFormPage() {
 
   const validate = () => {
     let errs = {}
-    console.log(email)
     if (!email.endsWith(".com") && !email.endsWith(".net") && !email.endsWith('.org') && !email.endsWith('.io')) errs.email = "Email must end in .com, .net, .org or .io"
     if (firstName.length > 50) errs.firstName = "First Name can't be longer than 50 characters"
     if (lastName.length > 50) errs.lastName = "Last Name can't be longer than 50 characters"
@@ -28,7 +27,6 @@ function SignupFormPage() {
     else if (password !== confirmPassword) errs.password = "Passwords do not match"
 
     setErrors(errs)
-    console.log(errs)
     if (Object.values(errs).length === 0) return true
     else return false
   };
@@ -37,7 +35,6 @@ function SignupFormPage() {
     e.preventDefault();
 
     if (validate()) {
-      console.log("logging in...")
         const data = await dispatch(signUp(firstName, lastName, email, password));
         if (data) {
           setErrors(data)

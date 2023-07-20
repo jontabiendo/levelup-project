@@ -94,7 +94,6 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
                 </div>
                 {tasks ? Object.values(tasks).map(task => (
                     <li key={task.id} className={task.is_complete === false || (showComplete === true && task.is_complete === true) ? "list-item" : "hidden"}>
-                        {console.log(task)}
                         <div className="left-task-wrapper">
                         {task.is_complete ? (<input type="checkbox" onChange={(e) => setTasks({
                             ...tasks,

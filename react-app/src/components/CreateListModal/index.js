@@ -41,9 +41,6 @@ const CreateListModal = () => {
         }
     };
     
-    // console.log(category, isPublic)
-    // console.log("category :", category.length)
-    
     return (
         <div className="newlist-form-wrapper">
             <h1>Create New List</h1>
