@@ -78,7 +78,7 @@ def api_help():
 
 
 @app.route('/', defaults={'path': ''})
-@app.route('/lists')
+# @app.route('/lists')
 @app.route('/<path:path>')
 def react_root(path):
     """
