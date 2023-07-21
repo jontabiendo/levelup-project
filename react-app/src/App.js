@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import Background from "./components/Background";
 import HomePage from "./components/HomePage";
 import LandingPage from "./components/LandingPage";
+import ErrorPage from "./components/404";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -42,6 +43,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route path="*">
+            <ErrorPage />
           </Route>
         </Switch>
         </>

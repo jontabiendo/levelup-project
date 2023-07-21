@@ -2,7 +2,7 @@
     background-color: #FFF4CB;
     display: flex;
     flex-direction: column;
-    width: 55rem;
+    width: 55%;
     height: 100%;
     box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
     border-radius: 1rem;
@@ -30,7 +30,7 @@
 }
 
 .delete-modal-div {
-    background-color: #fcfcfc;
+    background-color: #FFF4CB;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,6 +40,10 @@
     box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
     border-radius: 1rem;
     padding: 1rem;
+}
+
+#deleting-gif {
+    transform: scaleX(-1);
 }
 
 .left-task-wrapper {
