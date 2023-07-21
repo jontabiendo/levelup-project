@@ -28,7 +28,7 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      <Background />
+      {/* <Background /> */}
       {isLoaded && (
         <>
         <Switch>

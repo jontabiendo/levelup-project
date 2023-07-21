@@ -7,6 +7,7 @@ import { ModalProvider, Modal } from "./context/Modal";
 import configureStore from "./store";
 import * as sessionActions from "./store/session";
 import App from "./App";
+import Background from "./components/Background";
 
 import "./index.css";
 
@@ -25,6 +26,7 @@ function Root() {
 		<ModalProvider>
 			<Provider store={store}>
 				<BrowserRouter>
+					<Background />
 					<App />
 					<Modal />
 				</BrowserRouter>

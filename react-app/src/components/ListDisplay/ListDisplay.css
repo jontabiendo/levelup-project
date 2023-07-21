@@ -112,3 +112,7 @@ label {
     height: 5rem;
     width: 5rem;
 }
+
+textarea {
+    height: 3rem;
+}
