@@ -41,10 +41,9 @@ export const authenticate = () => async (dispatch) => {
 		}
 		const manData = manipulateData(data)
 
-		dispatch(setUser(manData.user));
 		dispatch(setLists(manData.lists));
 		dispatch(setTeams(manData.teams));
-		dispatch(setTasksAction(manData.tasks))
+		dispatch(setUser(manData.user));
 	}
 };
 
