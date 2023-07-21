@@ -19,7 +19,7 @@ def validation_errors_to_error_messages(validation_errors):
 
 
 @auth_routes.route('/')
-@auth_routes.route('/lists')
+# @auth_routes.route('/lists')
 def authenticate():
     """
     Authenticates a user.
