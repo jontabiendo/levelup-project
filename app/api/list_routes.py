@@ -21,7 +21,7 @@ def save_tasks(listId):
     updated_tasks = req['tasks']
 
     for idx, task in updated_tasks.items():
-        del task['comments']
+        # del task['comments']
         to_update_dict[idx].description = task['description']
         to_update_dict[idx].priority = task['priority']
         to_update_dict[idx].is_complete = task['is_complete']

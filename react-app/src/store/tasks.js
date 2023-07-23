@@ -1,11 +1,11 @@
-const SET_TASKS = 'tasks/SET'
+// const SET_TASKS = 'tasks/SET'
 const ADD_TASK = 'tasks/ADD_TASK';
 const DELETE_TASK = '/tasks/DELETE_TASK';
 
-export const setTasksAction = (tasks) => ({
-    type: SET_TASKS,
-    tasks
-})
+// export const setTasksAction = (tasks) => ({
+//     type: SET_TASKS,
+//     tasks
+// })
 
 const addTaskAction = (listId, task) => ({
     type: ADD_TASK,
@@ -51,11 +51,11 @@ const initialState = {
 
 const tasksReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SET_TASKS:
-            return {
-                ...state,
-                currentTasks: action.tasks
-            }
+        // case SET_TASKS:
+        //     return {
+        //         ...state,
+        //         currentTasks: action.tasks
+        //     }
         case ADD_TASK:
             return {
                 ...state,

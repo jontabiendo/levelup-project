@@ -1,11 +1,11 @@
 .signup-form-div {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     background-color: #FFF4CB;
     width: 44rem;
-    margin: auto;
+    margin:  1rem auto;
     height: 70%;
     box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
 }

@@ -1,5 +1,3 @@
-import { setTasksAction } from "./tasks";
-
 const SET_LISTS = "lists/SET_LIST";
 const CLEAR_LISTS = 'lists/DELETE_LIST';
 const ADD_PERSONAL_LIST = "list/ADD_PERSONAL_LIST";
@@ -10,6 +8,7 @@ const PUT_LIST = 'list/PUT_LIST';
 const SIGNUP_LIST = "list/SIGN_UP";
 const ADD_TASK = 'tasks/ADD_TASK';
 const DELETE_TASK = '/tasks/DELETE_TASK';
+const SET_TASKS = "tasks/SET"
 
 export const setLists = (lists) => ({
     type: SET_LISTS,
@@ -61,6 +60,12 @@ const deleteTaskAction = (taskId, listId) => ({
     taskId,
     listId
 });
+
+export const setTasksAction = (listId, tasks) => ({
+    type: SET_TASKS,
+    listId,
+    tasks
+})
 
 export const createListThunk = (title, category, description, isPublic) => async dispatch => {
     const res = await fetch(`/api/lists/new`, {
@@ -124,9 +129,10 @@ export const updateListTasksThunk = (list, tasks) => async dispatch => {
     })
 
     const tasksData = await tasksFetch.json()
+    console.log(list.id)
 
     if (tasksFetch.ok) {
-        dispatch(setTasksAction(tasksData))
+        dispatch(setTasksAction(list.id, tasksData))
     }
 };
 
@@ -205,6 +211,19 @@ const listsReducer = (state = initialState, action) => {
                 personal_lists: {
                     ...state.personal_lists,
                     [action.list.id]: action.list
+                }
+            }
+        case SET_TASKS:
+            return {
+                ...state,
+                personal_lists: {
+                    ...state.personal_lists,
+                    [action.listId]: {
+                        ...state.personal_lists[action.listId],
+                        tasks : {
+                            ...action.tasks
+                        }
+                    }
                 }
             }
         case ADD_TASK:

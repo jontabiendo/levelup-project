@@ -8,7 +8,7 @@ import OpenModalButton from "../OpenModalButton";
 import CreateListModal from "../CreateListModal";
 
 import './HomePage.css'
-import { setTasksAction } from "../../store/tasks";
+import { setTasksAction } from "../../store/lists";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 const HomePage = () => {
@@ -20,7 +20,7 @@ const HomePage = () => {
     const [reRender, setRerender] = useState(false)
 
     useEffect(() => {
-        dispatch(setTasksAction(currentList.tasks))
+        // dispatch(setTasksAction(currentList.tasks))
         if (!user) return <Redirect to="/login" />
     }, [currentList])
 

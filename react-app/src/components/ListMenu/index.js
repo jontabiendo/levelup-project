@@ -9,7 +9,7 @@ import ListDisplay from "../ListDisplay";
 
 import './ListMenu.css'
 import DeleteListModal from "../ListDisplay/deleteListModal";
-import { setTasksAction } from "../../store/tasks";
+import { setTasksAction } from "../../store/lists";
 
 const ListMenu = ({ homeRerender, currentListState }) => {
     const dispatch = useDispatch()
@@ -17,7 +17,7 @@ const ListMenu = ({ homeRerender, currentListState }) => {
     const [currentList, setCurrentList] = currentListState
 
     useEffect(() => {
-        dispatch(setTasksAction(currentList.tasks))
+        // dispatch(setTasksAction(currentList.tasks))
     }, [lists, currentList])
 
     return (
