@@ -27,5 +27,6 @@ class Team(db.Model):
             'description': self.description,
             'created_at': self.created_at,
             "lists": {list.id: list.to_dict() for list in self.lists},
+            "created_by": self.created_by,
             "members": {member.id: member.member_to_dict() for member in self.team_members}
         }

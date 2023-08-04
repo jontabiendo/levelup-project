@@ -13,17 +13,24 @@ function LoginFormPage() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
+  const [loggingIn, setLogginIn] = useState(false)
+
   if (sessionUser) return <Redirect to="/lists" />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
       const data = await dispatch(login(email, password));
-
+      // setLogginIn(true)
+      // setTimeout(console.log, 3000, "logging in")
       const res = await data
       if (data) {
         setErrors(data);
+        setLogginIn(false)
         return
-      } else history.push('/lists')
+      } else {
+        setLogginIn(false)
+        history.push('/lists')
+      }
   };
 
   const guestSignin = async () => {
@@ -64,6 +71,15 @@ function LoginFormPage() {
         <button onClick={guestSignin}>Continue as guest</button>
         <button onClick={() => history.push('/signup')}>Sign Up</button>
       </div>
+      {/* {loggingIn ? (
+        <div className="loading-div">
+          <div className="loading-wrapper">
+            <iframe  id='deleting-gif' src="https://giphy.com/embed/TZco470UACpNK" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <h3>loading...</h3>
+          </div>
+          <div id='video-overlay' onClick={null}></div>
+        </div>
+      ) : null} */}
     </div>
   );
 }

@@ -31,7 +31,7 @@ const DeleteListModal = ({ list, homeRerender }) => {
             </div>) : (
                 <>
                 <div className="delete-modal-div">
-                    <iframe id='deleting-gif' src="https://giphy.com/embed/TZco470UACpNK" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                    <iframe  id='deleting-gif' src="https://giphy.com/embed/TZco470UACpNK" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
                     <h3>Deleting to do list...</h3>
                 </div>
                 </>

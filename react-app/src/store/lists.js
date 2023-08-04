@@ -65,7 +65,7 @@ export const setTasksAction = (listId, tasks) => ({
     type: SET_TASKS,
     listId,
     tasks
-})
+});
 
 export const createListThunk = (title, category, description, isPublic) => async dispatch => {
     const res = await fetch(`/api/lists/new`, {

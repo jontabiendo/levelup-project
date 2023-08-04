@@ -28,3 +28,7 @@ input, textarea, select, button {
 button:hover {
     cursor: pointer;
 }
+
+li {
+    display: flex;
+}
