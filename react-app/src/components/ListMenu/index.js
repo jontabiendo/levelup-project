@@ -26,7 +26,7 @@ const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
             <div className="list-menu-header">
                 <button className={currentLists === personalLists ? "active" : ""} onClick={() => setCurrentLists(personalLists)}><h3>My Lists</h3></button>
                 <button className={currentLists === teamLists ? "active" : ""} onClick={() => setCurrentLists(teamLists)}><h3>My Teams</h3></button>
-                {/* <OpenModalButton modalComponent={<CreateListModal />} buttonText="+" /> */}
+                <OpenModalButton modalComponent={<CreateListModal />} buttonText="+" />
             </div>
             {currentLists === personalLists ? (<ul id="current-lists-ul">
                 {Object.values(personalLists).map(list => (
