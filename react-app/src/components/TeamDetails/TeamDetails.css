@@ -1,0 +1,39 @@
+.team-info-modal {
+    display: flex;
+    flex-direction: column;
+    width: 34rem;
+    height: 27rem;
+    align-items: center;
+    background-color: #FFF4CB;
+    box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.team-members-div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.team-member-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.add-members-modal {
+    display: flex;
+    flex-direction: column;
+    width: 34rem;
+    height: 18rem;
+    align-items: center;
+    background-color: #FFF4CB;
+    box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+#back-button {
+    position: absolute;
+    left: 1rem;
+}

@@ -16,10 +16,19 @@
     flex-direction: column;
 }
 
+.team-lists-div {
+    list-style-type: disc;
+}
+
+li {
+    list-style-type: disc outside;
+}
+
 .li-div {
-    display: flex;
+    display: list-item;
     justify-content: space-between;
 }
+
 
 .list-menu-header {
     display: flex;

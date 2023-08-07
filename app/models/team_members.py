@@ -24,7 +24,7 @@ class Team_Member(db.Model):
         return {**self.team.to_dict()}
     
     def member_to_dict(self):
-        return {self.member.id: self.member.no_eager_dict()}
+        return {**self.member.no_eager_dict()}
 
     # members = db.relationship("User", back_populates="team_association")
 

@@ -40,6 +40,8 @@ export const authenticate = () => async (dispatch) => {
 			return;
 		}
 		const manData = manipulateData(data)
+		console.log(manData)
+		
 
 		dispatch(setLists(manData.lists));
 		dispatch(setTeams(manData.teams));

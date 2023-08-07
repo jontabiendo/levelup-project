@@ -9,7 +9,7 @@ import './NewListForm.css'
 
 export const categories = ["Work", "Finance", "Personal", "Chores", "Productivity", "Groceries", "Entertainment"]
 
-const CreateListModal = () => {
+const CreateListModal = ({homeRerender}) => {
     const dispatch = useDispatch()
     const [title, setTitle] = useState("")
     const [category, setCategory] = useState("")
