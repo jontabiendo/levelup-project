@@ -7,6 +7,7 @@ import './ListMenu.css'
 import DeleteListModal from "../ListDisplay/deleteListModal";
 import { setLists } from "../../store/lists";
 import TeamInfoModal from "../TeamDetails";
+import CreateButton from "../CreateButton";
 
 const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
     const dispatch = useDispatch()
@@ -31,7 +32,7 @@ const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
             <div className="list-menu-header">
                 <button className={currentLists === personalLists ? "active" : ""} onClick={() => setCurrentLists(personalLists)}><h3>My Lists</h3></button>
                 <button className={currentLists === teamLists ? "active" : ""} onClick={() => setCurrentLists(teamLists)}><h3>My Teams</h3></button>
-                <OpenModalButton modalComponent={<CreateListModal homeRerender={homeRerender} />} buttonText="+" />
+                <OpenModalButton modalComponent={<CreateButton homeRerender={homeRerender} />} buttonText="+" />
             </div>
             {currentLists === personalLists ? (<ul id="current-lists-ul">
                 {Object.values(personalLists).map(list => (
@@ -54,7 +55,7 @@ const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
                             <div className="team-list-div">
                                 <div>
                                 <button className={currentTeam.id === team.id ? "active" : ""}>{team.name}</button>
-                                {user.id === team.created_by ? (<OpenModalButton modalComponent={<TeamInfoModal team={team} user={user} />} buttonText={<i className="fa-solid fa-info"></i>} />) : null}
+                                {user.id === team.created_by ? (<OpenModalButton modalComponent={<TeamInfoModal team={team} user={user} homeRerender={homeRerender} />} buttonText={<i className="fa-solid fa-info"></i>} />) : null}
                                 </div>
                                 <ul className="team-lists-div">
                                     {Object.values(team.lists).map(list => (

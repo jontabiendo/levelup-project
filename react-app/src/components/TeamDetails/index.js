@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useModal } from '../../context/Modal'
+import { deleteTeamThunk } from '../../store/teams'
 
 import './TeamDetails.css'
 import OpenModalButton from '../OpenModalButton';
@@ -24,9 +25,29 @@ const AddMembersModal = ({ team, user }) => {
             </form>
         </div>
     )
-}
+};
 
-const TeamInfoModal = ({ team, user }) => {
+const ConfirmTeamDelete = ({ team, user, homeRerender }) => {
+    const dispatch = useDispatch();
+    const { closeModal } = useModal();
+
+    const deleteTeam = async () => {
+        const res = await dispatch(deleteTeamThunk(team.id))
+        homeRerender()
+        closeModal()
+    }
+
+    return (
+        <div className='confirm-team-delete-div'>
+            <p>Are you sure you want to delete {team.name}? </p>
+            <p>You can't undo this change</p>
+            <button onClick={deleteTeam}>Yes, delete</button>
+            <OpenModalButton modalComponent={<TeamInfoModal team={team} user={user}/> } buttonText="No don't delete" />
+        </div>
+    )
+};
+
+const TeamInfoModal = ({ team, user, homeRerender }) => {
     const dispatch = useDispatch();
     const [name, setName] = useState(team.name);
     const [description, setDescription] = useState(team.description);    
@@ -53,6 +74,7 @@ const TeamInfoModal = ({ team, user }) => {
                     ))}
                 </ul>
             </div>
+            {user.id === team.created_by ? <OpenModalButton modalComponent={<ConfirmTeamDelete team={team} user={user} />} buttonText={"Delete Team"} /> : null}
         </div>
     )
 };
