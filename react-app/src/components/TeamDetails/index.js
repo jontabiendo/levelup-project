@@ -19,7 +19,7 @@ const AddMembersModal = ({ team, user }) => {
                 <OpenModalButton modalComponent={<TeamInfoModal team={team} user={user}/> } buttonText="Back" />
             </div>
             <form onSubmit={handleSubmit}>
-                <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='search by email' required  />
+                <input id='add-member-input' type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='search by email' required  />
                 <button type='submit'>Add Member</button>
             </form>
         </div>

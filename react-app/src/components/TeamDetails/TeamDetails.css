@@ -25,7 +25,7 @@
     display: flex;
     flex-direction: column;
     width: 34rem;
-    height: 18rem;
+    height: 10rem;
     align-items: center;
     background-color: #FFF4CB;
     box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
@@ -33,7 +33,16 @@
     padding: 1rem;
 }
 
+.add-members-modal > form {
+    margin-top: 4rem;
+    display: flex;
+}
+
 #back-button {
     position: absolute;
     left: 1rem;
+}
+
+#add-member-input {
+    margin-right: 3rem;
 }
