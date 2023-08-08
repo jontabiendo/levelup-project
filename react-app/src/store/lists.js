@@ -129,7 +129,6 @@ export const updateListTasksThunk = (list, tasks) => async dispatch => {
     })
 
     const tasksData = await tasksFetch.json()
-    console.log(list.id)
 
     if (tasksFetch.ok) {
         dispatch(setTasksAction(list.id, tasksData))

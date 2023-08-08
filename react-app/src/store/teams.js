@@ -1,7 +1,8 @@
 const SET_TEAMS = "teams/SET_TEAMS";
 const CLEAR_TEAMS = "teams/CLEAR_TEAMS";
 const CREATE_TEAM = "teams/CREATE_TEAM";
-const DELETE_TEAM = "teams/DELETE_TEAM"
+const DELETE_TEAM = "teams/DELETE_TEAM";
+const EDIT_TEAM = 'team/EDIT_TEAM';
 
 export const setTeams = (teams) => ({
     type: SET_TEAMS,
@@ -13,23 +14,28 @@ const createTeamAction = (team) => ({
     team
 });
 
+const editTeamAction = team => ({
+    type: EDIT_TEAM,
+    team
+});
+
 const deleteTeamAction = (teamId) => ({
     type: DELETE_TEAM,
     teamId
-})
+});
 
 export const clearTeams = () => ({
     type: CLEAR_TEAMS
 });
 
 export const createTeamThunk = (team, userId) => async dispatch => {
-    console.log("dispatching to api route", {...team, userId})
     const res = await fetch(`api/teams/${userId}/create-team`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(
-            team
-        )
+        body: JSON.stringify({
+            name: team.name,
+            description: team.description
+        })
     });
 
     const data = await res.json();
@@ -37,7 +43,25 @@ export const createTeamThunk = (team, userId) => async dispatch => {
     if (res.ok) {
         dispatch(createTeamAction(data))
         return
-    } else return {"error": "Something went wrong creating your team"}
+    } else return data
+};
+
+export const editTeamThunk = (team, teamId) => async dispatch => {
+    const res = await fetch(`/api/teams/${teamId}/edit`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            name: team.name,
+            description: team.description
+        })
+    })
+
+    const data = await res.json();
+
+    if (res.ok) {
+        dispatch(editTeamAction(data))
+        return
+    } else return data
 };
 
 export const deleteTeamThunk = (teamId) => async dispatch => {
@@ -62,6 +86,11 @@ const teamsReducer = (state = initialState, action) => {
                 ...action.teams
             }
         case CREATE_TEAM:
+            return {
+                ...state,
+                ...action.team
+            }
+        case EDIT_TEAM:
             return {
                 ...state,
                 [action.team.id]: action.team

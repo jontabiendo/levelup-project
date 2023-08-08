@@ -29,10 +29,9 @@ const CreateTeamModal = ({ homeRerender }) => {
 
         if (Object.values(errors).length) return
         else {
-            console.log("dispatching to thunk", {name, description, id: user.id})
             const res = dispatch(createTeamThunk({name, description}, user.id))
 
-            if (res) setErrors(res)
+            if (res.errors) setErrors(res)
             else {
                 closeModal();
                 homeRerender();

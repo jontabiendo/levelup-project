@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useModal } from '../../context/Modal'
-import { deleteTeamThunk } from '../../store/teams'
+import { deleteTeamThunk, editTeamThunk } from '../../store/teams'
 
 import './TeamDetails.css'
 import OpenModalButton from '../OpenModalButton';
@@ -30,9 +30,9 @@ const AddMembersModal = ({ team, user }) => {
 const ConfirmTeamDelete = ({ team, user, homeRerender }) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-
     const deleteTeam = async () => {
         const res = await dispatch(deleteTeamThunk(team.id))
+
         homeRerender()
         closeModal()
     }
@@ -51,16 +51,43 @@ const TeamInfoModal = ({ team, user, homeRerender }) => {
     const dispatch = useDispatch();
     const [name, setName] = useState(team.name);
     const [description, setDescription] = useState(team.description);    
+    const [errors, setErrors] = useState({});
 
-    console.log(team.members)
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const res = await dispatch(editTeamThunk({name, description}, team.id))
+
+        if (res) setErrors(res);
+        else return
+    };
+    console.log(errors)
 
     return (
         <div className='team-info-modal'>
-            <h1>{name}</h1>
-            <div className='team-description-div'>
-                <h4>Description:</h4>
-                <p>{description}</p>
-            </div>
+            {user.id !== team.created_by ? (
+            <>
+                <h1>{name}</h1>
+                <div className='team-description-div'>
+                    <h4>Description:</h4>
+                    <p>{description}</p>
+                </div>
+            </>
+            ) : (
+            <form onSubmit={handleSubmit}>
+                {errors.name && <p className='errors'>{errors.name}</p>}
+                <div className='edit-team-header'>
+                    <input type='text' value={name} onChange={e => setName(e.target.value)} required placeholder='Team title here' ></input>
+                    <button type='submit'>Save</button>
+
+                </div>
+                <div className='team-description-div'>
+                    {errors.description && <p className='errors'>{errors.description}</p>}
+                    <label>Description:</label>
+                    <textarea value={description} onChange={e => setDescription(e.target.value)} required placeholder='Team description'></textarea>
+                </div>
+            </form>
+            )}
             <div className='team-members-div'>
                 <div className='team-member-header-wrapper'>
                     <h4>Members: </h4>
@@ -74,7 +101,7 @@ const TeamInfoModal = ({ team, user, homeRerender }) => {
                     ))}
                 </ul>
             </div>
-            {user.id === team.created_by ? <OpenModalButton modalComponent={<ConfirmTeamDelete team={team} user={user} />} buttonText={"Delete Team"} /> : null}
+            {user.id === team.created_by ? <OpenModalButton modalComponent={<ConfirmTeamDelete team={team} user={user} homeRerender={homeRerender}/>} buttonText={"Delete Team"} /> : null}
         </div>
     )
 };

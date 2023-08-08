@@ -20,8 +20,6 @@ function LoginFormPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
       const data = await dispatch(login(email, password));
-      // setLogginIn(true)
-      // setTimeout(console.log, 3000, "logging in")
       const res = await data
       if (data) {
         setErrors(data);
