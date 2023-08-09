@@ -3,6 +3,7 @@ const CLEAR_TEAMS = "teams/CLEAR_TEAMS";
 const CREATE_TEAM = "teams/CREATE_TEAM";
 const DELETE_TEAM = "teams/DELETE_TEAM";
 const EDIT_TEAM = 'team/EDIT_TEAM';
+const REQUEST_MEMBER = "team/REQUEST_MEMBER"
 
 export const setTeams = (teams) => ({
     type: SET_TEAMS,
@@ -27,6 +28,11 @@ const deleteTeamAction = (teamId) => ({
 export const clearTeams = () => ({
     type: CLEAR_TEAMS
 });
+
+const requestMemberAction = (request) => ({
+    type: REQUEST_MEMBER,
+    request
+})
 
 export const createTeamThunk = (team, userId) => async dispatch => {
     const res = await fetch(`api/teams/${userId}/create-team`, {
@@ -57,6 +63,7 @@ export const editTeamThunk = (team, teamId) => async dispatch => {
     })
 
     const data = await res.json();
+    console.log(data)
 
     if (res.ok) {
         dispatch(editTeamAction(data))
@@ -76,6 +83,27 @@ export const deleteTeamThunk = (teamId) => async dispatch => {
     return
 }
 
+export const inviteMemberThunk = (email, team_id) => async dispatch => {
+    const res = await fetch('/api/requests/invite/send', {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            email,
+            team_id
+        })
+    });
+
+    const data = await res.json();
+    console.log(data)
+
+    if (data.error) {
+        return data
+    } else {
+        dispatch(requestMemberAction(data))
+        return
+    }
+}
+
 const initialState = {}
 
 const teamsReducer = (state = initialState, action) => {
@@ -93,7 +121,7 @@ const teamsReducer = (state = initialState, action) => {
         case EDIT_TEAM:
             return {
                 ...state,
-                [action.team.id]: action.team
+                ...action.team
             }
         case DELETE_TEAM:
             let newState = {...state}
@@ -101,6 +129,11 @@ const teamsReducer = (state = initialState, action) => {
             return newState
         case CLEAR_TEAMS:
             return {}
+        case REQUEST_MEMBER:
+            return {
+                ...state,
+                [state[action.request.team_id].invitations[action.request.id]]: action.request
+            }
         default:
             return state
     }

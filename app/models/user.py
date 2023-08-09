@@ -1,7 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-
+from app.models.request import Request
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -21,6 +21,8 @@ class User(db.Model, UserMixin):
     owned_teams = db.relationship("Team", back_populates="creator")
     user_teams = db.relationship("Team_Member", back_populates='member')
     comments = db.relationship("Comment", back_populates="user")
+    sent_requests = db.relationship("Request", foreign_keys=[Request.requestor_id], back_populates="requestor", )
+    received_requests = db.relationship("Request",foreign_keys=[Request.requestee_id], back_populates="requestee", )
 
     # team_association = db.relationship("Team_Member", back_populates="members", cascade = "all, delete")
 
@@ -52,7 +54,8 @@ class User(db.Model, UserMixin):
                 "team_lists": {**team_lists},
                 # "current_list": current_list.to_dict()
             },
-            "teams": {team.id: team.team_to_dict() for team in self.user_teams}
+            "teams": {team.team_id: team.team_to_dict() for team in self.user_teams},
+            "requests": {request.id: request.dict_for_user() for request in self.received_requests}
         }
     
     def no_eager_dict(self):

@@ -14,7 +14,7 @@ def seed_users():
         email='gandalf@aa.io',
         password='password',
         first_name="Gandalf",
-        last_name="Grey")
+        last_name="Greyhame")
     
     legolas = User(
         email='legolas@aa.io',
@@ -29,10 +29,76 @@ def seed_users():
         last_name="Ring"
     )
 
+    frodo = User(
+        email= "frodo@example.com",
+        password= "password",
+        first_name= "Frodo",
+        last_name= "Baggins"
+    )
+    
+    aragorn = User(
+    email= "aragorn@example.com",
+    password= "password",
+    first_name= "Aragorn",
+    last_name= "Dunedain"
+    )
+
+    gimli = User(
+    email= "gimli@example.com",
+    password= "password",
+    first_name= "Gimli",
+    last_name= "son of Gloin"
+    )
+
+    arwen = User(
+    email= "arwen@example.com",
+    password= "password",
+    first_name= "Arwen",
+    last_name= "Evenstar"
+    )
+
+    sam = User(
+    email= "samwise@example.com",
+    password= "password",
+    first_name= "Samwise",
+    last_name= "Gamgee"
+    )
+  
+    gollum = User(
+    email= "gollum@example.com",
+    password= "password",
+    first_name= "Gollum",
+    last_name= "Smeagol"
+    )
+
+    galadriel = User(
+    email= "galadriel@example.com",
+    password= "password",
+    first_name= "Galadriel",
+    last_name= "Lady of Lothlorien"
+    )
+
+    eowyn = User(
+    email= "eowyn@example.com",
+    password= "password",
+    first_name= "Eowyn",
+    last_name= "Shieldmaiden of Rohan"
+    )
+
+
+
     db.session.add(demo)
     db.session.add(gandalf)
     db.session.add(legolas)
     db.session.add(sauron)
+    db.session.add(frodo)
+    db.session.add(aragorn)
+    db.session.add(gimli)
+    db.session.add(arwen)
+    db.session.add(gollum)
+    db.session.add(eowyn)
+    db.session.add(sam)
+    
     db.session.commit()
 
 

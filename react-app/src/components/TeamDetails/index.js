@@ -1,18 +1,27 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useModal } from '../../context/Modal'
-import { deleteTeamThunk, editTeamThunk } from '../../store/teams'
+import { deleteTeamThunk, editTeamThunk, inviteMemberThunk } from '../../store/teams'
 
 import './TeamDetails.css'
 import OpenModalButton from '../OpenModalButton';
 
 const AddMembersModal = ({ team, user }) => {
+    const dispatch = useDispatch();
     const [email, setEmail] = useState("")
     const [errors, setErrors] = useState({})
     const { closeModal } = useModal()
 
-    const handleSubmit = () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
+        const res = await dispatch(inviteMemberThunk(email, team.id))
+        console.log(res)
+
+        if (res) setErrors(res)
+        else {
+            closeModal()
+    }
     }
     return (
         <div className='add-members-modal'>
@@ -23,6 +32,7 @@ const AddMembersModal = ({ team, user }) => {
                 <input id='add-member-input' type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='search by email' required  />
                 <button type='submit'>Add Member</button>
             </form>
+            {errors.error ? <p className='errors'>{errors.error}</p> : null}
         </div>
     )
 };

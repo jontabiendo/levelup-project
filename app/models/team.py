@@ -15,6 +15,7 @@ class Team(db.Model):
     creator = db.relationship("User", back_populates="owned_teams")
     lists = db.relationship("List", back_populates="team")
     team_members = db.relationship("Team_Member", back_populates='team', cascade="all, delete")
+    invitations = db.relationship("Request", back_populates="team_invitation")
 
     # user_association = db.relationship("Team_Member", back_populates="teams", cascade = "all, delete")
 
@@ -28,5 +29,13 @@ class Team(db.Model):
             'created_at': self.created_at,
             "lists": {list.id: list.to_dict() for list in self.lists},
             "created_by": self.created_by,
-            "members": {member.id: member.member_to_dict() for member in self.team_members}
+            "members": {member.id: member.member_to_dict() for member in self.team_members},
+            "invitations": {invite.id: invite.dict_for_team() for invite in self.invitations}
+        }
+    
+    def no_eager_dict(self):
+        return{
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
         }

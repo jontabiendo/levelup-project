@@ -36,11 +36,11 @@ export const authenticate = () => async (dispatch) => {
 	});
 	if (response.ok) {
 		const data = await response.json();
-		console.log(data)		
 		if (data.errors) {
 			return;
 		}
 		const manData = manipulateData(data)
+		console.log(manData)		
 
 		dispatch(setLists(manData.lists));
 		dispatch(setTeams(manData.teams));
