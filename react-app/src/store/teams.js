@@ -1,3 +1,4 @@
+import { addTeamList } from './lists';
 import { deleteRequestAction } from './session'
 
 const SET_TEAMS = "teams/SET_TEAMS";
@@ -7,6 +8,7 @@ const DELETE_TEAM = "teams/DELETE_TEAM";
 const EDIT_TEAM = 'team/EDIT_TEAM';
 const REQUEST_MEMBER = "team/REQUEST_MEMBER";
 const JOIN_TEAM = "team/JOIN_TEAM";
+const LEAVE_TEAM = 'team/LEAVE_TEAM'
 
 export const setTeams = (teams) => ({
     type: SET_TEAMS,
@@ -42,7 +44,10 @@ const joinTeamAction = (team) => ({
     team
 });
 
-
+const leaveTeamAction = (teamId) => ({
+    type: LEAVE_TEAM,
+    teamId
+});
 
 export const createTeamThunk = (team, userId) => async dispatch => {
     const res = await fetch(`api/teams/${userId}/create-team`, {
@@ -73,7 +78,6 @@ export const editTeamThunk = (team, teamId) => async dispatch => {
     })
 
     const data = await res.json();
-    console.log(data)
 
     if (res.ok) {
         dispatch(editTeamAction(data))
@@ -104,7 +108,6 @@ export const inviteMemberThunk = (email, team_id) => async dispatch => {
     });
 
     const data = await res.json();
-    console.log(data)
 
     if (data.error) {
         return data
@@ -132,11 +135,25 @@ export const respondInviteThunk = (response, request) => async dispatch => {
 
         return data;
     } else {
+        console.log(data)
         dispatch(joinTeamAction(data));
+        dispatch(addTeamList(Object.values(data)[0].lists))
         dispatch(deleteRequestAction(request.id));
 
         return;
     }
+};
+
+export const leaveTeamThunk = teamId => async dispatch => {
+    const res = await fetch(`/api/teams/${teamId}/leave`, {
+        method: "DELETE"
+    });
+
+    const data = await res;
+    console.log("deleting team from redux")
+
+    dispatch(leaveTeamAction(teamId))
+    return
 };
 
 const initialState = {}
@@ -180,6 +197,10 @@ const teamsReducer = (state = initialState, action) => {
                 ...state,
                 ...action.team
             }
+        case LEAVE_TEAM:
+            let newState1 = {...state};
+            delete newState1[action.teamId]
+            return newState1
         default:
             return state
     }

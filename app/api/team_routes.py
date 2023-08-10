@@ -75,3 +75,21 @@ def edit_team(team_id):
         return {team_to_edit.id: team_to_edit.to_dict()}
 
     return {"errors": validation_errors_to_error_messages(form.errors)}, 400
+
+@team_routes.route('/<int:team_id>/leave', methods=["DELETE"])
+@login_required
+def leave_team(team_id):
+    """
+    Removes the current_user from the team by team_id by deleting record from team_members table matching both criteria
+    """
+    member = Team_Member.query.filter(Team_Member.team_id == team_id).filter(Team_Member.member_id == current_user.id).first()
+
+    if member is None:
+        return {"error": "Cannot leave a team you are not part of"}, 400
+    
+    db.session.delete(member)
+
+    db.session.commit()
+
+    return {"success": "You have been successfully removed from team"}
+    

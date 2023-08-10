@@ -14,19 +14,16 @@ def send_request():
     req = request.get_json()
 
     user = User.query.filter(User.email == req['email']).first()
-    print("***",user, "***")
 
     if user is None:
         return {"error": "we didn't find a user with that email"}, 404
     
     is_member = Team_Member.query.filter(Team_Member.member_id == user.id).filter(Team_Member.team_id == req['team_id']).first()
-    print("***", is_member, "***")
 
     if is_member is not None:
         return {"error": "user is already part of this team"}, 409
     
     is_requested = Request.query.filter(Request.requestee_id == user.id).filter(Request.team_id == req['team_id']).first()
-    print("***", is_requested, "***")
 
     if is_requested is not None:
         return {"error": "user has already been sent a request to join this team"}, 409
@@ -40,8 +37,6 @@ def send_request():
     db.session.add(new_request)
     db.session.commit()
 
-    print("***", new_request, "***")
-
     return new_request.dict_for_team(), 201
 
 @request_routes.route('<int:request_id>/respond', methods=["DELETE"])
@@ -51,11 +46,9 @@ def resolve_request(request_id):
     This route accepts the request, adds the member to the team and deletes it
     Or declines the request, and deletes the request
     """
-    print("*** resolving request ***")
     req = request.get_json()
     request_to_resolve = Request.query.get(request_id)
 
-    print("*** checking response ***", req['response'])
     if req['response'] == "accept":
         member = Team_Member(
             member_id = req['request']['recipient']['id'],
@@ -67,8 +60,7 @@ def resolve_request(request_id):
             db.session.add(member)
 
             db.session.commit()
-            print("*** request accepted ***", member)
-            return {member.id: member.team_to_dict()}
+            return {member.team_id: member.team_to_dict()}
         
         else:
             return {"error": "Something went wrong, please try again"}
@@ -78,11 +70,8 @@ def resolve_request(request_id):
 
         db.session.commit()
 
-        print("*** request declined ***")
-
         return {"deleted": "Invitation declined"}, 200
     
-    print("*** Something else went wrong ***")
     return {"error", "Something went wrong, please try again"}, 500
     
 

@@ -46,6 +46,6 @@ def undo():
     undo_tasks()
     undo_lists()
     undo_team_members()
-    undo_teams
+    undo_teams()
     undo_users()
     # Add other undo functions here

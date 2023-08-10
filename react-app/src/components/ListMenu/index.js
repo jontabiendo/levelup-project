@@ -17,15 +17,18 @@ const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
     const [teamLists, setTeamLists] = useState(lists.team_lists)
     const [personalLists, setPersonalLists] = useState(lists.personal_lists)
     const [currentLists, setCurrentLists] = useState(personalLists)
-    const [currentTeam, setCurrentTeam] = useState(Object.values(teams)[0])
+    const [currentTeams, setCurrentTeams] = useState(teams)
+    const [currentTeam, setCurrentTeam] = useState(null)
     const user = useSelector(state => state.session.user)
 
+    
     useEffect(() => {
         setPersonalLists(listsState.personal_lists)
         setTeamLists(listsState.team_lists)
         setCurrentLists(listsState.personal_lists)
+        setCurrentTeams(teams)
     }, [listsState, currentList, teams])
-
+    
     return (
         <>
         <div className="list-menu-div">
@@ -39,9 +42,9 @@ const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
                     <li key={list.id}>
                         <div className="li-div">
                             {currentList.id === list.id ? (<button className={"active"} onClick={(e) => {
-                            setCurrentList(list)}}>{list.title}
+                                setCurrentList(list)}}>{list.title}
                             </button>) : (<button onClick={(e) => {
-                            setCurrentList(list)}}>{list.title}
+                                setCurrentList(list)}}>{list.title}
                             </button>)}
                             <OpenModalButton modalComponent={<DeleteListModal list={list} homeRerender={homeRerender}/>} buttonText={<i className="fa-solid fa-trash"></i>} />
                         </div>
@@ -52,10 +55,10 @@ const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
             (
                 <div id="team-lists-div">
                     {Object.values(teams).map(team => (
-                            <div className="team-list-div">
+                        <div className="team-list-div">
                                 <div>
-                                <button className={currentTeam.id === team.id ? "active" : ""}>{team.name}</button>
-                                {user.id === team.created_by ? (<OpenModalButton modalComponent={<TeamInfoModal team={team} user={user} homeRerender={homeRerender} />} buttonText={<i className="fa-solid fa-info"></i>} />) : null}
+                                <button className={currentTeam &&(currentTeam.id === team.id) ? "active" : ""}>{team.name}</button>
+                                <OpenModalButton modalComponent={<TeamInfoModal team={team} user={user} homeRerender={homeRerender} />} buttonText={<i className="fa-solid fa-info"></i>} />
                                 </div>
                                 <ul className="team-lists-div">
                                     {Object.values(team.lists).map(list => (

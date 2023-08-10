@@ -5,7 +5,7 @@ import { clearTeams, setTeams } from "./teams";
 // constants
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
-const DELETE_REQUEST = "team/DECLINE_REQUEST";
+const DELETE_REQUEST = "team/DELETE_REQUEST";
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -45,8 +45,7 @@ export const authenticate = () => async (dispatch) => {
 		if (data.errors) {
 			return;
 		}
-		const manData = manipulateData(data)
-		console.log(manData)		
+		const manData = manipulateData(data)	
 
 		dispatch(setLists(manData.lists));
 		dispatch(setTeams(manData.teams));

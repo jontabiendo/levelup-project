@@ -25,7 +25,7 @@ const addPersonalList = (list) => ({
     list
 });
 
-const addTeamList = (list) => ({
+export const addTeamList = (list) => ({
     type: ADD_TEAM_LIST,
     list
 });

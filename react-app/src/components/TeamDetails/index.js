@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useModal } from '../../context/Modal'
 import { deleteTeamThunk, editTeamThunk, inviteMemberThunk } from '../../store/teams'
+import OpenModalButton from '../OpenModalButton';
+import { leaveTeamThunk } from '../../store/teams';
 
 import './TeamDetails.css'
-import OpenModalButton from '../OpenModalButton';
 
 const AddMembersModal = ({ team, user }) => {
     const dispatch = useDispatch();
@@ -16,7 +17,6 @@ const AddMembersModal = ({ team, user }) => {
         e.preventDefault();
 
         const res = await dispatch(inviteMemberThunk(email, team.id))
-        console.log(res)
 
         if (res) setErrors(res)
         else {
@@ -42,7 +42,6 @@ const ConfirmTeamDelete = ({ team, user, homeRerender }) => {
     const { closeModal } = useModal();
     const deleteTeam = async () => {
         const res = await dispatch(deleteTeamThunk(team.id))
-
         homeRerender()
         closeModal()
     }
@@ -57,7 +56,29 @@ const ConfirmTeamDelete = ({ team, user, homeRerender }) => {
     )
 };
 
+const ConfirmLeaveTeam = ({ team, user, homeRerender }) => {
+    console.log(homeRerender)
+    const dispatch = useDispatch();
+    const { closeModal } = useModal();
+    const leaveTeam = async () => {
+        const res = await dispatch(leaveTeamThunk(team.id))
+
+        homeRerender()
+        closeModal()
+    }
+
+    return (
+        <div className='confirm-team-delete-div'>
+            <p>Are you sure you want to leave {team.name}? </p>
+            <p>You can only rejoin through invitation</p>
+            <button onClick={leaveTeam}>Yes, leave</button>
+            <OpenModalButton modalComponent={<TeamInfoModal team={team} user={user}/> } buttonText="No don't leave" />
+        </div>
+    )
+};
+
 const TeamInfoModal = ({ team, user, homeRerender }) => {
+    console.log(homeRerender)
     const dispatch = useDispatch();
     const [name, setName] = useState(team.name);
     const [description, setDescription] = useState(team.description);    
@@ -71,7 +92,6 @@ const TeamInfoModal = ({ team, user, homeRerender }) => {
         if (res) setErrors(res);
         else return
     };
-    console.log(errors)
 
     return (
         <div className='team-info-modal'>
@@ -105,13 +125,13 @@ const TeamInfoModal = ({ team, user, homeRerender }) => {
                 </div>
                 <ul className='members-list-ul'>
                     {Object.values(team.members).map(member => (
-                        <li key={member.id}>
+                        <li className='members-list-li' key={member.id}>
                             <p>{member.first_name} {member.last_name}</p>
                         </li>
                     ))}
                 </ul>
             </div>
-            {user.id === team.created_by ? <OpenModalButton modalComponent={<ConfirmTeamDelete team={team} user={user} homeRerender={homeRerender}/>} buttonText={"Delete Team"} /> : null}
+            {user.id === team.created_by ? <OpenModalButton modalComponent={<ConfirmTeamDelete team={team} user={user} homeRerender={homeRerender}/>} buttonText={"Delete Team"} /> : <OpenModalButton modalComponent={<ConfirmLeaveTeam team={team} user={user} homeRerender={homeRerender} />} buttonText={"Leave Team"} />}
         </div>
     )
 };
