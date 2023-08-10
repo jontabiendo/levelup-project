@@ -2,6 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import MenuButton from './MenuButton';
+import Notification from './Notification';
+
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
@@ -14,6 +16,7 @@ function Navigation({ isLoaded }){
 			</div>
 			{isLoaded && (
 				<div id='menu-button-div'>
+					<Notification />
 					<MenuButton user={sessionUser} />
 				</div>
 			)}

@@ -21,7 +21,7 @@ class Request(db.Model):
             "id": self.id,
             "sender": self.requestor.no_eager_dict(),
             "recipient": self.requestee.no_eager_dict(),
-            "team_id": self.team_invitation.no_eager_dict(),
+            "team": self.team_invitation.no_eager_dict(),
             "status": self.status
         }
     

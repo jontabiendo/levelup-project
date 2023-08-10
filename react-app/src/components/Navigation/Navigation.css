@@ -59,3 +59,23 @@
 .profile-dropdown > button {
   width: 9rem;
 }
+
+#notification-button {
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  color: white;
+}
+
+.notification-dropdown {
+  background-color: #FFF4CB;
+  position: absolute;
+  right: 0;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
+  right: 0.5rem;
+  /* color: #FFF4CB; */
+  padding: 0.5rem 1rem;
+}

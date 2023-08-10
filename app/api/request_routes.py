@@ -44,7 +44,7 @@ def send_request():
 
     return {new_request.id: new_request.dict_for_team()}, 201
 
-@request_routes.route('<int:request_id/resolve', method=["DELETE"])
+@request_routes.route('<int:request_id>/resolve', methods=["DELETE"])
 @login_required
 def resolve_request(request_id):
     """
@@ -53,8 +53,25 @@ def resolve_request(request_id):
     """
     req = request.get_json()
 
-    if req['resolve'] is "accept":
+    if req['resolve'] == "accept":
         member = Team_Member(
             member_id = req['member_id'],
             team_id = req['team_id']
         )
+
+        request = Request.query.get(request_id)
+
+        if member is not None:
+            db.session.delete(request)
+            db.session.add(member)
+
+            db.session.commit()
+
+            return {member.team_to_dict()}
+        
+        else:
+            return {"error": "Something went wrong, please try again"}
+        
+    # if req
+
+
