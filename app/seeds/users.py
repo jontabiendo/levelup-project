@@ -98,6 +98,7 @@ def seed_users():
     db.session.add(gollum)
     db.session.add(eowyn)
     db.session.add(sam)
+    db.session.add(galadriel)
     
     db.session.commit()
 

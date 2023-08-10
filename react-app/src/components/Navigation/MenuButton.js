@@ -43,7 +43,7 @@ function MenuButton({ user }) {
   const closeMenu = () => setShowMenu(false);
 
   return (
-    <>
+    <div>
       <button id='menu-button' onClick={openMenu}>
       <i className="fa-solid fa-bars fa-2xl"></i>
       </button>
@@ -70,7 +70,7 @@ function MenuButton({ user }) {
           </div>
         )}
       </ul>
-    </>
+    </div>
   );
 }
 

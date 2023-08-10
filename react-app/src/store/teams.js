@@ -1,9 +1,12 @@
+import { deleteRequestAction } from './session'
+
 const SET_TEAMS = "teams/SET_TEAMS";
 const CLEAR_TEAMS = "teams/CLEAR_TEAMS";
 const CREATE_TEAM = "teams/CREATE_TEAM";
 const DELETE_TEAM = "teams/DELETE_TEAM";
 const EDIT_TEAM = 'team/EDIT_TEAM';
-const REQUEST_MEMBER = "team/REQUEST_MEMBER"
+const REQUEST_MEMBER = "team/REQUEST_MEMBER";
+const JOIN_TEAM = "team/JOIN_TEAM";
 
 export const setTeams = (teams) => ({
     type: SET_TEAMS,
@@ -32,7 +35,14 @@ export const clearTeams = () => ({
 const requestMemberAction = (request) => ({
     type: REQUEST_MEMBER,
     request
-})
+});
+
+const joinTeamAction = (team) => ({
+    type: JOIN_TEAM,
+    team
+});
+
+
 
 export const createTeamThunk = (team, userId) => async dispatch => {
     const res = await fetch(`api/teams/${userId}/create-team`, {
@@ -102,7 +112,32 @@ export const inviteMemberThunk = (email, team_id) => async dispatch => {
         dispatch(requestMemberAction(data))
         return
     }
-}
+};
+
+export const respondInviteThunk = (response, request) => async dispatch => {
+    const res = await fetch(`/api/requests/${request.id}/respond`, {
+        method: "DELETE",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            response,
+            request
+        })
+    });
+
+    const data = await res.json();
+
+    if (data.error) return data;
+    else if (data.deleted) {
+        dispatch(deleteRequestAction(request.id));
+
+        return data;
+    } else {
+        dispatch(joinTeamAction(data));
+        dispatch(deleteRequestAction(request.id));
+
+        return;
+    }
+};
 
 const initialState = {}
 
@@ -132,7 +167,18 @@ const teamsReducer = (state = initialState, action) => {
         case REQUEST_MEMBER:
             return {
                 ...state,
-                [state[action.request.team_id].invitations[action.request.id]]: action.request
+                [action.request.team_id]: {
+                    ...state[action.request.team_id],
+                    invitations: {
+                        ...state[action.request.team_id].invitations,
+                        [action.request.id]: action.request
+                    }
+                }
+            }
+        case JOIN_TEAM:
+            return {
+                ...state,
+                ...action.team
             }
         default:
             return state

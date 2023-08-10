@@ -5,6 +5,7 @@ import { clearTeams, setTeams } from "./teams";
 // constants
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
+const DELETE_REQUEST = "team/DECLINE_REQUEST";
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -14,6 +15,11 @@ const setUser = (user) => ({
 const removeUser = () => ({
 	type: REMOVE_USER,
 });
+
+export const deleteRequestAction = (requestId) => ({
+    type: DELETE_REQUEST,
+    requestId
+})
 
 const manipulateData = (data) => {
 	const objReturn = {};
@@ -134,6 +140,10 @@ export default function reducer(state = initialState, action) {
 			return { user: action.payload };
 		case REMOVE_USER:
 			return { user: null};
+		case DELETE_REQUEST:
+			let newState = {...state};
+			delete newState.user.requests[action.requestId];
+			return newState;
 		default:
 			return state;
 	}

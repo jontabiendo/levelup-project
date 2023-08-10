@@ -42,36 +42,49 @@ def send_request():
 
     print("***", new_request, "***")
 
-    return {new_request.id: new_request.dict_for_team()}, 201
+    return new_request.dict_for_team(), 201
 
-@request_routes.route('<int:request_id>/resolve', methods=["DELETE"])
+@request_routes.route('<int:request_id>/respond', methods=["DELETE"])
 @login_required
 def resolve_request(request_id):
     """
     This route accepts the request, adds the member to the team and deletes it
     Or declines the request, and deletes the request
     """
+    print("*** resolving request ***")
     req = request.get_json()
+    request_to_resolve = Request.query.get(request_id)
 
-    if req['resolve'] == "accept":
+    print("*** checking response ***", req['response'])
+    if req['response'] == "accept":
         member = Team_Member(
-            member_id = req['member_id'],
-            team_id = req['team_id']
+            member_id = req['request']['recipient']['id'],
+            team_id = req['request']['team']['id']
         )
 
-        request = Request.query.get(request_id)
-
         if member is not None:
-            db.session.delete(request)
+            db.session.delete(request_to_resolve)
             db.session.add(member)
 
             db.session.commit()
-
-            return {member.team_to_dict()}
+            print("*** request accepted ***", member)
+            return {member.id: member.team_to_dict()}
         
         else:
             return {"error": "Something went wrong, please try again"}
         
-    # if req
+    if req['response'] == "decline":
+        db.session.delete(request_to_resolve)
+
+        db.session.commit()
+
+        print("*** request declined ***")
+
+        return {"deleted": "Invitation declined"}, 200
+    
+    print("*** Something else went wrong ***")
+    return {"error", "Something went wrong, please try again"}, 500
+    
+
 
 

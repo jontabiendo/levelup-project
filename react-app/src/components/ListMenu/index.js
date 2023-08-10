@@ -24,7 +24,7 @@ const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
         setPersonalLists(listsState.personal_lists)
         setTeamLists(listsState.team_lists)
         setCurrentLists(listsState.personal_lists)
-    }, [listsState, currentList])
+    }, [listsState, currentList, teams])
 
     return (
         <>

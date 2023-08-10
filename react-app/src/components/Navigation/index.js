@@ -16,7 +16,7 @@ function Navigation({ isLoaded }){
 			</div>
 			{isLoaded && (
 				<div id='menu-button-div'>
-					<Notification />
+					{sessionUser ? <Notification /> : null}
 					<MenuButton user={sessionUser} />
 				</div>
 			)}
