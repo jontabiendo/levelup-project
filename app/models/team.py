@@ -13,9 +13,9 @@ class Team(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.now())
 
     creator = db.relationship("User", back_populates="owned_teams")
-    lists = db.relationship("List", back_populates="team")
+    lists = db.relationship("List", back_populates="team", cascade="all, delete")
     team_members = db.relationship("Team_Member", back_populates='team', cascade="all, delete")
-    invitations = db.relationship("Request", back_populates="team_invitation")
+    invitations = db.relationship("Request", back_populates="team_invitation", cascade="all, delete")
 
     # user_association = db.relationship("Team_Member", back_populates="teams", cascade = "all, delete")
 

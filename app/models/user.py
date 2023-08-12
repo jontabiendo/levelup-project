@@ -21,8 +21,8 @@ class User(db.Model, UserMixin):
     owned_teams = db.relationship("Team", back_populates="creator")
     user_teams = db.relationship("Team_Member", back_populates='member')
     comments = db.relationship("Comment", back_populates="user")
-    sent_requests = db.relationship("Request", foreign_keys=[Request.requestor_id], back_populates="requestor", )
-    received_requests = db.relationship("Request",foreign_keys=[Request.requestee_id], back_populates="requestee", )
+    sent_requests = db.relationship("Request", foreign_keys=[Request.requestor_id], back_populates="requestor")
+    received_requests = db.relationship("Request",foreign_keys=[Request.requestee_id], back_populates="requestee")
 
     # team_association = db.relationship("Team_Member", back_populates="members", cascade = "all, delete")
 
@@ -41,7 +41,11 @@ class User(db.Model, UserMixin):
 
     def to_dict(self):
         personal_lists = {list.id: list.to_dict() for list in self.lists if not list.team_id}
-        team_lists = {list.id: list.to_dict() for list in self.lists if list.team_id}
+        # team_lists = {list.id: list.to_dict() for list in self.lists if list.team_id}
+        team_lists = {}
+        for team in self.user_teams:
+            for list in team.team.lists:
+                team_lists[list.id] = list.to_dict()
         # current_list = max(self.lists, key=lambda x: x.created_at)
 
         return {
@@ -51,7 +55,7 @@ class User(db.Model, UserMixin):
             "last_name": self.last_name,
             "lists": {
                 "personal_lists": {**personal_lists},
-                "team_lists": {**team_lists},
+                "team_lists": team_lists,
                 # "current_list": current_list.to_dict()
             },
             "teams": {team.team_id: team.team_to_dict() for team in self.user_teams},

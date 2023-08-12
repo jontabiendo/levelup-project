@@ -17,12 +17,10 @@ class List(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.now())
 
     user = db.relationship("User", back_populates="lists")
-    tasks = db.relationship("Task", back_populates="list")
+    tasks = db.relationship("Task", back_populates="list", cascade="all, delete")
     team = db.relationship("Team", back_populates="lists")
 
     def to_dict(self):
-        task_dict = {task.id: task.to_dict() for task in self.tasks}
-
         return {
             'id': self.id,
             'title': self.title,

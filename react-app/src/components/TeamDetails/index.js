@@ -57,7 +57,6 @@ const ConfirmTeamDelete = ({ team, user, homeRerender }) => {
 };
 
 const ConfirmLeaveTeam = ({ team, user, homeRerender }) => {
-    console.log(homeRerender)
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const leaveTeam = async () => {
@@ -78,7 +77,6 @@ const ConfirmLeaveTeam = ({ team, user, homeRerender }) => {
 };
 
 const TeamInfoModal = ({ team, user, homeRerender }) => {
-    console.log(homeRerender)
     const dispatch = useDispatch();
     const [name, setName] = useState(team.name);
     const [description, setDescription] = useState(team.description);    

@@ -135,7 +135,6 @@ export const respondInviteThunk = (response, request) => async dispatch => {
 
         return data;
     } else {
-        console.log(data)
         dispatch(joinTeamAction(data));
         dispatch(addTeamList(Object.values(data)[0].lists))
         dispatch(deleteRequestAction(request.id));
@@ -150,7 +149,6 @@ export const leaveTeamThunk = teamId => async dispatch => {
     });
 
     const data = await res;
-    console.log("deleting team from redux")
 
     dispatch(leaveTeamAction(teamId))
     return

@@ -9,7 +9,7 @@ const Background = () => {
         <>
             <div id='video-overlay' onClick={null}></div>
             <div id='background'>
-            <video src={video} autoPlay muted loop />
+                <video src={video} autoPlay muted loop />
             </div>
         </>
     )
