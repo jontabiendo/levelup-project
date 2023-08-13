@@ -22,7 +22,6 @@ const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
     const user = useSelector(state => state.session.user)
 
     useEffect(() => {
-        console.log("use effect re rendering from ListMenu")
         setPersonalLists(listsState.personal_lists)
         setTeamLists(listsState.team_lists)
         setCurrentLists(listsState.personal_lists)
