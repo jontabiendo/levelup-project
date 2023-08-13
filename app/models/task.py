@@ -15,7 +15,7 @@ class Task(db.Model):
 
     list = db.relationship("List", back_populates="tasks")
     user = db.relationship("User", back_populates="tasks")
-    comments = db.relationship("Comment", back_populates="task")
+    comments = db.relationship("Comment", back_populates="task", cascade="all, delete")
 
     def to_dict(self):
         return {
