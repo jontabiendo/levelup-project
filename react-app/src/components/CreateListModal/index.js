@@ -9,12 +9,13 @@ import './NewListForm.css'
 
 export const categories = ["Work", "Finance", "Personal", "Chores", "Productivity", "Groceries", "Entertainment"]
 
-const CreateListModal = ({homeRerender}) => {
+const CreateListModal = ({homeRerender, teams}) => {
     const dispatch = useDispatch()
     const [title, setTitle] = useState("")
     const [category, setCategory] = useState("")
     const [description, setDescription] = useState("")
     const [isPublic, setIsPublic] = useState(false)
+    const [team, setTeam] = useState("")
     const [errors, setErrors] = useState({})
     const { closeModal } = useModal()
     
@@ -32,7 +33,7 @@ const CreateListModal = ({homeRerender}) => {
         if (Object.values(errs).length) return null
         else {
             const data = await dispatch
-            (createListThunk(title, category, description, isPublic))
+            (createListThunk(title, category, description, isPublic, team))
             if (data) {
                 setErrors(data)
             } else {
@@ -59,6 +60,15 @@ const CreateListModal = ({homeRerender}) => {
                     </select>
                 </label>
                 <label><input type="checkbox" value={isPublic} onChange={(e) => setIsPublic(!isPublic)} />Public</label>
+                <div className="team-select-div">
+                    <label>Team: 
+                        <select onChange={(e) => setTeam(e.target.value)} >
+                            <option value="" selected>none</option>
+                            {Object.values(teams).map(team => (
+                                <option key={team.id} value={team.id}>{team.name}</option>
+                            ))}
+                        </select></label>
+                </div>
                 <label>Description:
                     <textarea value={description} onChange={(e) => setDescription(e.target.value)} required/>
                 </label>

@@ -67,27 +67,49 @@ export const setTasksAction = (listId, tasks) => ({
     tasks
 });
 
-export const createListThunk = (title, category, description, isPublic) => async dispatch => {
-    const res = await fetch(`/api/lists/new`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            title,
-            category,
-            description,
-            isPublic
-        })
-    });
+export const createListThunk = (title, category, description, isPublic, team) => async dispatch => {
+    if (!team) {
+        const res = await fetch(`/api/lists/new`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                title,
+                category,
+                description,
+                isPublic
+            })
+        });
 
-    const data = await res.json();
+        const data = await res.json();
 
-    if (res.ok) {
-        if (data.team_id) dispatch(addTeamList(data))
-        else dispatch(addPersonalList(data))
-        return null;
+        if (res.ok) {
+            dispatch(addPersonalList(data))
+            return null;
+        } else {
+            return data;
+        };
     } else {
-        return data;
-    };
+        const res = await fetch(`/api/teams/${team}/lists`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                title,
+                category,
+                description,
+                isPublic, 
+                team
+            })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            dispatch(addTeamList(data))
+            return null;
+        } else {
+            return data;
+        };
+    }
 };
 
 export const deleteListThunk = (listId) => async dispatch => {

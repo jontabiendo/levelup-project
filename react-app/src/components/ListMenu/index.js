@@ -21,13 +21,13 @@ const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
     const [currentTeam, setCurrentTeam] = useState(null)
     const user = useSelector(state => state.session.user)
 
-    
     useEffect(() => {
+        console.log("use effect re rendering from ListMenu")
         setPersonalLists(listsState.personal_lists)
         setTeamLists(listsState.team_lists)
         setCurrentLists(listsState.personal_lists)
         setCurrentTeams(teams)
-    }, [listsState, currentList, teams])
+    }, [listsState, teams])
     
     return (
         <>
@@ -35,7 +35,7 @@ const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
             <div className="list-menu-header">
                 <button className={currentLists === personalLists ? "active" : ""} onClick={() => setCurrentLists(personalLists)}><h3>My Lists</h3></button>
                 <button className={currentLists === teamLists ? "active" : ""} onClick={() => setCurrentLists(teamLists)}><h3>My Teams</h3></button>
-                <OpenModalButton modalComponent={<CreateButton homeRerender={homeRerender} />} buttonText="+" />
+                <OpenModalButton modalComponent={<CreateButton homeRerender={homeRerender} teams={teams} />} buttonText="+" />
             </div>
             {currentLists === personalLists ? (<ul id="current-lists-ul">
                 {Object.values(personalLists).map(list => (
@@ -61,7 +61,7 @@ const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
                                 <OpenModalButton modalComponent={<TeamInfoModal team={team} user={user} homeRerender={homeRerender} />} buttonText={<i className="fa-solid fa-info"></i>} />
                                 </div>
                                 <ul className="team-lists-div">
-                                    {Object.values(team.lists).map(list => (
+                                    {Object.values(teamLists).filter(list => list.team_id === team.id).map(list => (
                                         <li key={list.id}>
                                         <div className="li-div">
                                             {currentList.id === list.id ? (<button className={"active"} onClick={(e) => {

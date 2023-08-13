@@ -5,10 +5,10 @@ import CreateTeamModal from '../CreateTeamModal';
 
 import "./CreateButton.css"
 
-const CreateButton = ({ homeRerender }) => {
+const CreateButton = ({ homeRerender, teams }) => {
     return (
         <div className='create-button-modal'>
-            <OpenModalButton modalComponent={<CreateListModal homeRerender={homeRerender} />} buttonText="Add List" />
+            <OpenModalButton modalComponent={<CreateListModal homeRerender={homeRerender} teams={teams} />} buttonText="Add List" />
             <OpenModalButton modalComponent={<CreateTeamModal homeRerender={homeRerender} />} buttonText="Add Team" />
         </div>
     )

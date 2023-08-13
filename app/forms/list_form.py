@@ -7,3 +7,4 @@ class ListForm(FlaskForm):
     description = TextAreaField("Description", validators=[DataRequired(), Length(max=255)])
     category = SelectField("Category", choices=[("Work", "Work"), ("Finance", "Finance"), ("Personal", "Personal"), ("Chores", "Chores"), ("Productivity", "Productivity"), ("Groceries", "Groceries"), ("Entertainment", "Entertainment")])
     is_public = BooleanField("Public")
+    team = IntegerField("Team_Id")

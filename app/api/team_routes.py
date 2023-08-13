@@ -1,8 +1,8 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.models import Team, Team_Member, db
+from app.models import Team, Team_Member, List, db
 from .auth_routes import validation_errors_to_error_messages
-from app.forms import TeamForm
+from app.forms import TeamForm, ListForm
 
 team_routes = Blueprint('teams', __name__)
 
@@ -93,3 +93,26 @@ def leave_team(team_id):
 
     return {"success": "You have been successfully removed from team"}
     
+@team_routes.route('/<int:team_id>/lists', methods=['POST'])
+@login_required
+def new_team_list(team_id):
+    """
+    Create a new list for the team by team_id
+    """
+    form = ListForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        new_list = List(
+            title = form.data['title'],
+            category = form.data['category'],
+            description = form.data['description'],
+            is_public = form.data['is_public'],
+            user_id = current_user.id,
+            team_id = form.data['team']
+        )
+        db.session.add(new_list)
+        db.session.commit()
+
+        return {new_list.id: new_list.to_dict()}
+    return{"errors": validation_errors_to_error_messages(form.errors)}
