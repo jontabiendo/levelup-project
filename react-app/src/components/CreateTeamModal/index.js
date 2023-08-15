@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createTeamThunk } from '../../store/teams';
 import { useModal } from '../../context/Modal';
 
+import './CreateTeamModal.css'
 
 const CreateTeamModal = ({ homeRerender }) => {
     const dispatch = useDispatch();
@@ -42,12 +43,14 @@ const CreateTeamModal = ({ homeRerender }) => {
     return (
         <div className='create-team-modal'>
             <h1>Add Team Details</h1>
-            <form onSubmit={handleSubmit}>
+            <form id='new-team-form' onSubmit={handleSubmit}>
                 {errors.name && <p className='errors'>{errors.name}</p>}
                 <label>Name: <input type='text' value={name} onChange={(e) => setName(e.target.value)} placeholder='Team Name' required maxLength={50}/></label>
                 {errors.description && <p className='errors'>{errors.description}</p>}
-                <label>Description:</label>
-                <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder='What is the purpose of the team?' required maxLength={255}></textarea>
+                <label>Description:
+                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder='What is the purpose of the team?' required maxLength={255}></textarea>
+                </label>
+                
                 <button type='submit'>Create</button>
             </form>
         </div>
