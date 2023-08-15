@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import CreateListModal from "../CreateListModal";
 import CreateTeamModal from "../CreateTeamModal";
 
 import './ListMenu.css'
 import DeleteListModal from "../ListDisplay/deleteListModal";
-import { setLists } from "../../store/lists";
 import TeamInfoModal from "../TeamDetails";
 import CreateButton from "../CreateButton";
 
 const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
-    const dispatch = useDispatch()
     const listsState = useSelector(state => state.lists)
 
     

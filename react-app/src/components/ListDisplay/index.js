@@ -1,17 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import listsReducer, { setLists } from "../../store/lists";
-import DeleteListModal from "./deleteListModal";
-import OpenModalButton from "../OpenModalButton";
 import { updateListTasksThunk, addTaskThunk, deleteTaskThunk } from "../../store/lists";
-// import { addTaskThunk, deleteTaskThunk } from "../../store/tasks";
-import TaskTile from "../taskTile/taskTile";
 import { categories } from "../CreateListModal";
-
 
 import './ListDisplay.css'
 
-const ListDisplay = ({ list, onRerender, currentListState }) => {
+const ListDisplay = ({ currentListState }) => {
     const dispatch = useDispatch()
     const user = useSelector(state => state.session.user)
     const [currentList, setCurrentList] = currentListState
@@ -72,8 +66,6 @@ const ListDisplay = ({ list, onRerender, currentListState }) => {
         delete newState[taskId]
         setTasks({...newState})
     }
-
-    const taskClassname = "list-item" + (!showComplete ? "" : " hidden")
 
     return (
         <>

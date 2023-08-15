@@ -1,5 +1,4 @@
 import { clearLists, setLists, signupList } from "./lists";
-import { setTasksAction } from "./tasks";
 import { clearTeams, setTeams } from "./teams";
 
 // constants
@@ -26,7 +25,6 @@ const manipulateData = (data) => {
 
 	objReturn.lists = data.lists;
 	objReturn.teams = data.teams;
-	// objReturn.tasks = Object.values(data.lists)[0].tasks
 	delete data.lists
 	delete data.teams
 	objReturn.user = data

@@ -20,7 +20,6 @@ function LoginFormPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
       const data = await dispatch(login(email, password));
-      const res = await data
       if (data) {
         setErrors(data);
         setLogginIn(false)
@@ -33,7 +32,6 @@ function LoginFormPage() {
 
   const guestSignin = async () => {
     const data = await dispatch(login("demo@aa.io", "password"));
-    const res = await data
       if (data) {
         setErrors(data);
         return

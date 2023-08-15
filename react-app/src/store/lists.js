@@ -117,7 +117,7 @@ export const deleteListThunk = (listId) => async dispatch => {
         method: "DELETE",
     });
 
-    const data = await res.json();
+    await res.json();
 
     dispatch(deleteList(listId));
 
@@ -175,7 +175,7 @@ export const deleteTaskThunk = (taskId, listId) => async dispatch => {
         method: "DELETE"
     });
 
-    const data = await res.json();
+    await res.json();
 
     if (res.ok) {
         dispatch(deleteTaskAction(taskId, listId))

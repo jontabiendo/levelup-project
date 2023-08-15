@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { deleteListThunk } from "../../store/lists";
 
@@ -11,7 +11,7 @@ const DeleteListModal = ({ list, homeRerender }) => {
     const [deleted, setDeleted] = useState(false)
     
     const handleDelete = async (e) => {
-        const data = await dispatch(deleteListThunk(list.id));
+        await dispatch(deleteListThunk(list.id));
 
         setDeleted(true)
 

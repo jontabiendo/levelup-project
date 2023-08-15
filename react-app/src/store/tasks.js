@@ -37,7 +37,7 @@ export const deleteTaskThunk = (taskId, listId) => async dispatch => {
         method: "DELETE"
     });
 
-    const data = await res.json();
+    await res.json();
 
     if (res.ok) {
         dispatch(deleteTaskAction(taskId, listId))
@@ -51,11 +51,6 @@ const initialState = {
 
 const tasksReducer = (state = initialState, action) => {
     switch (action.type) {
-        // case SET_TASKS:
-        //     return {
-        //         ...state,
-        //         currentTasks: action.tasks
-        //     }
         case ADD_TASK:
             return {
                 ...state,

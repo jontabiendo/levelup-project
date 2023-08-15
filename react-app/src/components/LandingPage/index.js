@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 import './landingPage.css'
 import img from '../../assets/pngegg.png'
 
-const LandingPage = ({ user }) => {
+const LandingPage = () => {
     const history = useHistory();
     const [start, setStart] = useState(false)
     const [newGame, setNewGame] = useState(false)
 
-    // if (user) return <Redirect to="/lists" />
     return (
         <div className="landing-page-div">
             <h1>Welcome to LevelUp!</h1>

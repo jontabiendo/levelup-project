@@ -9,21 +9,14 @@ import Background from "./components/Background";
 import HomePage from "./components/HomePage";
 import LandingPage from "./components/LandingPage";
 import ErrorPage from "./components/404";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 function App() {
   const dispatch = useDispatch();
-  const history = useHistory()
   const [isLoaded, setIsLoaded] = useState(false);
-  // const user = useSelector(state => state.session.user)
 
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
-    // if (user) history.push('/lists')
   }, [dispatch]);
-
-  // {user ? (<Redirect to="/lists" />) : (<Redirect to='/' />)}
 
   return (
     <>

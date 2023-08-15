@@ -90,7 +90,7 @@ export const deleteTeamThunk = (teamId) => async dispatch => {
         method: "DELETE"
     });
 
-    const data = await res.json();
+    await res.json();
 
     dispatch(deleteTeamAction(teamId))
 
@@ -148,7 +148,7 @@ export const leaveTeamThunk = teamId => async dispatch => {
         method: "DELETE"
     });
 
-    const data = await res;
+    await res;
 
     dispatch(leaveTeamAction(teamId))
     return

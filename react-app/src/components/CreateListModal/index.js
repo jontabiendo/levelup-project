@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { login } from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { createListThunk } from "../../store/lists";
 
 import './NewListForm.css'

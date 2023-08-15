@@ -41,7 +41,7 @@ const ConfirmTeamDelete = ({ team, user, homeRerender }) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const deleteTeam = async () => {
-        const res = await dispatch(deleteTeamThunk(team.id))
+        await dispatch(deleteTeamThunk(team.id))
         homeRerender()
         closeModal()
     }
@@ -60,7 +60,7 @@ const ConfirmLeaveTeam = ({ team, user, homeRerender }) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const leaveTeam = async () => {
-        const res = await dispatch(leaveTeamThunk(team.id))
+        await dispatch(leaveTeamThunk(team.id))
 
         homeRerender()
         closeModal()
