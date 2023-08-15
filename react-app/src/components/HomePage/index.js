@@ -5,11 +5,15 @@ import ListMenu from "../ListMenu";
 import ListDisplay from "../ListDisplay";
 import TeamList from "../TeamList";
 import OpenModalButton from "../OpenModalButton";
-import CreateListModal from "../CreateListModal";
+// import CreateListModal from "../CreateListModal";
+import CreateButton from "../CreateButton";
+// import OpenModalButton from "../OpenModalButton";
 
 import './HomePage.css'
 import { setTasksAction } from "../../store/lists";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+
+import img from "../../assets/panda.gif"
 
 const HomePage = () => {
     const dispatch = useDispatch();
@@ -23,8 +27,6 @@ const HomePage = () => {
         // dispatch(setTasksAction(currentList.tasks))
         if (!user) return <Redirect to="/login" />
     }, [currentList])
-
-    if (!currentList) return null
     
     const homeRerender = () => {
         setRerender(!reRender)
@@ -35,7 +37,12 @@ const HomePage = () => {
         <div className="home-page-div">
             <ListMenu homeRerender={homeRerender} lists={lists} teams={teams} currentListState={[currentList, setCurrentList]} />
 
-            <ListDisplay onRerender={homeRerender} currentListState={[currentList, setCurrentList]} />
+            {currentList ? <ListDisplay onRerender={homeRerender} currentListState={[currentList, setCurrentList]} /> : (
+                <div className="empty-list-display-div">
+                    <img id="panda" src={img} frameBorder="0" allowFullScreen></img>
+                    <p>Nothing to do... <OpenModalButton modalComponent={<CreateButton homeRerender={homeRerender} teams={teams} />} buttonText="Make a new one?" /></p>
+                </div>
+            )}
             {/* <div className="right-panels">
                 <div className="right-panel-buttons">
                     <OpenModalButton modalComponent={<CreateListModal />} buttonText="Create List" />

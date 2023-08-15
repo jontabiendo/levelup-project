@@ -23,3 +23,22 @@
 ::-webkit-scrollbar {
     display: none;
 }
+
+.empty-list-display-div {
+    background-color: #FFF4CB;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 65%;
+    height: 100%;
+    box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+#panda {
+    display: flex;
+    height: 40rem;
+    width: 40rem;
+}

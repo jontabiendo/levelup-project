@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import CreateListModal from "../CreateListModal";
+import CreateTeamModal from "../CreateTeamModal";
 
 import './ListMenu.css'
 import DeleteListModal from "../ListDisplay/deleteListModal";
@@ -12,6 +13,7 @@ import CreateButton from "../CreateButton";
 const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
     const dispatch = useDispatch()
     const listsState = useSelector(state => state.lists)
+
     
     const [currentList, setCurrentList] = currentListState
     const [teamLists, setTeamLists] = useState(lists.team_lists)
@@ -20,7 +22,7 @@ const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
     const [currentTeams, setCurrentTeams] = useState(teams)
     const [currentTeam, setCurrentTeam] = useState(null)
     const user = useSelector(state => state.session.user)
-
+    
     useEffect(() => {
         setPersonalLists(listsState.personal_lists)
         setTeamLists(listsState.team_lists)
@@ -29,7 +31,7 @@ const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
     }, [listsState, teams])
     
     return (
-        <>
+        
         <div className="list-menu-div">
             <div className="list-menu-header">
                 <button className={currentLists === personalLists ? "active" : ""} onClick={() => setCurrentLists(personalLists)}><h3>My Lists</h3></button>
@@ -37,7 +39,7 @@ const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
                 <OpenModalButton modalComponent={<CreateButton homeRerender={homeRerender} teams={teams} />} buttonText="+" />
             </div>
             {currentLists === personalLists ? (<ul id="current-lists-ul">
-                {Object.values(personalLists).map(list => (
+                {Object.values(personalLists).length ? Object.values(personalLists).map(list => (
                     <li key={list.id}>
                         <div className="li-div">
                             {currentList.id === list.id ? (<button className={"active"} onClick={(e) => {
@@ -48,12 +50,19 @@ const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
                             <OpenModalButton modalComponent={<DeleteListModal list={list} homeRerender={homeRerender}/>} buttonText={<i className="fa-solid fa-trash"></i>} />
                         </div>
                     </li>
-                ))}
+                ))
+                :
+                (
+                    <>
+                        <p>You have no lists</p>
+                        <p>Make a new <OpenModalButton modalComponent={<CreateListModal homeRerender={homeRerender} teams={teams} />} buttonText="list"/> ?</p>
+                    </>
+                )}
             </ul>) 
             : 
             (
                 <div id="team-lists-div">
-                    {Object.values(teams).map(team => (
+                    {Object.values(teams).length ? Object.values(teams).map(team => (
                         <div className="team-list-div">
                                 <div>
                                 <button className={currentTeam &&(currentTeam.id === team.id) ? "active" : ""}>{team.name}</button>
@@ -74,11 +83,18 @@ const ListMenu = ({ homeRerender, currentListState, teams, lists }) => {
                                     ))}
                                     </ul>
                             </div>
-                    ))}
+                    ))
+                :
+                (
+                    <>
+                        <p>You have no teams</p>
+                        <p>Make a new <OpenModalButton modalComponent={<CreateTeamModal homeRerender={homeRerender} teams={teams} />} buttonText="team"/> ?</p>
+                    </>
+                )}
                 </div>
             )}
         </div>
-        </>
+        
     )
 }
 
