@@ -23,10 +23,14 @@ const CreateListModal = ({homeRerender, teams}) => {
         
         if (description.length > 50) {
             errs.description = "Description can't be over 50 characters"
-        }
+        };
         if (category.length === 0) {
             errs.category = "Please select a category for your list"
-        }
+        };
+        if (title.length > 50) {
+            errs.title = "Title can't be over 50 characters"
+        };
+
         setErrors(errs)
         if (Object.values(errs).length) return null
         else {
@@ -44,6 +48,7 @@ const CreateListModal = ({homeRerender, teams}) => {
         <div className="newlist-form-wrapper">
             <h1>Create New List</h1>
             <form className='newlist-form' onSubmit={handleSubmit}>
+                {errors.title && <p className="errors">{errors.title}</p>}
                 {errors.description && <p className="errors">{errors.description}</p>}
                 <label>Title: 
                     <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />

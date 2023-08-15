@@ -100,7 +100,7 @@ def edit_list(listId):
     form = ListForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
-    if form.validate():
+    if form.validate_on_submit():
         list = List.query.get(listId)
         list.title = form['title'].data
         list.category = form['category'].data
