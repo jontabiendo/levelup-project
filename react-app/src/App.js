@@ -9,10 +9,12 @@ import Background from "./components/Background";
 import HomePage from "./components/HomePage";
 import LandingPage from "./components/LandingPage";
 import ErrorPage from "./components/404";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const user = useSelector(state => state.session.user)
 
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
@@ -29,7 +31,8 @@ function App() {
           <LandingPage />
         </Route>
         <Route path='/lists'>
-          <HomePage />
+          {user ? <HomePage /> : <Redirect to="/login" />}
+          {/* <HomePage /> */}
         </Route>
           <Route path="/login" >
             <LoginFormPage />

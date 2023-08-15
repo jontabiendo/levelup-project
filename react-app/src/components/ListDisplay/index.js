@@ -128,7 +128,7 @@ const ListDisplay = ({ currentListState }) => {
                             }
                         })
                         setSaved(false)}}></input>)}
-                        <input onKeyDown={task.description.length === 50 ? alert("You have reached the limit of 50 characters") : ""} type="text" value={task.description} onChange={(e) => {
+                        <input onKeyDown={task.description.length === 50 ? alert("You have reached the limit of 50 characters") : null} type="text" value={task.description} onChange={(e) => {
                             setTasks({
                             ...tasks,
                             [task.id]: {

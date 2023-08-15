@@ -111,7 +111,7 @@ def edit_list(listId):
 
         return {"list": list.to_dict()}
     
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 200
 
 @list_routes.route('/<int:listId>/delete', methods=["DELETE"])
 @login_required
