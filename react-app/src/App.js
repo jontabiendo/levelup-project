@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import Background from "./components/Background";
 import HomePage from "./components/HomePage";
 import LandingPage from "./components/LandingPage";
+import Chat from "./components/chat";
 import ErrorPage from "./components/404";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -32,7 +33,7 @@ function App() {
         </Route>
         <Route path='/lists'>
           {user ? <HomePage /> : <Redirect to="/login" />}
-          {/* <HomePage /> */}
+          <Chat />
         </Route>
           <Route path="/login" >
             <LoginFormPage />
