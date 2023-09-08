@@ -10,12 +10,18 @@ const Chat = () => {
     // use state for controlled form input
     const [chatInput, setChatInput] = useState(""); 
     const user = useSelector(state => state.session.user);
+    const teams = useSelector(state => state.teams)
     console.log(user.first_name)
 
     useEffect(() => {
-
         // create websocket
         socket = io();
+
+        socket.emit("connect", user)
+
+        socket.on("connect", () => {
+            console.log(socket.id)
+        })
         
         // listen for chat events
         socket.on("chat", (chat) => {

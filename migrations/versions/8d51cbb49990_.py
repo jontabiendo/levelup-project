@@ -93,6 +93,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    # op.create_table("messages",
+    # sa.Column("id", sa.Integer(), nullable=False),
+    # sa.Column("sender_id", sa.Integer(),)
+    # )
     # ### end Alembic commands ###
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
