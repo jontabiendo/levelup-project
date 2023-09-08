@@ -2,6 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from app.models.request import Request
+# from app.models.message import Message
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -23,6 +24,9 @@ class User(db.Model, UserMixin):
     comments = db.relationship("Comment", back_populates="user")
     sent_requests = db.relationship("Request", foreign_keys=[Request.requestor_id], back_populates="requestor")
     received_requests = db.relationship("Request",foreign_keys=[Request.requestee_id], back_populates="requestee")
+
+    # sent_messages = db.relationship("Message", foreign_keys=[Message.sender_id], back_populates="sender")
+    # received_messages = db.relationship("Message", foreign_keys=[Message.recipient_id], back_populates="recipient")
 
     # team_association = db.relationship("Team_Member", back_populates="members", cascade = "all, delete")
 
