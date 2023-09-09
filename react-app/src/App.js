@@ -11,14 +11,9 @@ import LandingPage from "./components/LandingPage";
 import ChatUsers from "./components/chat";
 import ErrorPage from "./components/404";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
-import socketIO from 'socket.io-client'
+import io from 'socket.io-client'
 
-let socket;
-if (process.env.NODE_ENV === "production") {
-	socket = socketIO.connect("https://levelup-lknw.onrender.com")
-} else {
-  socket = socketIO.connect()
-}
+let socket = io()
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -31,7 +26,7 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
+      <Navigation isLoaded={isLoaded} socket={socket} />
       <Background />
       {isLoaded && (
         <>

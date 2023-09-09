@@ -6,7 +6,7 @@ import Notification from './Notification';
 
 import './Navigation.css';
 
-function Navigation({ isLoaded }){
+function Navigation({ isLoaded, socket }){
 	const sessionUser = useSelector(state => state.session.user);
 
 	return (
@@ -17,7 +17,7 @@ function Navigation({ isLoaded }){
 			{isLoaded && (
 				<div id='menu-button-div'>
 					{sessionUser ? <Notification /> : null}
-					<MenuButton user={sessionUser} />
+					<MenuButton user={sessionUser} socket={socket} />
 				</div>
 			)}
 		</div>
