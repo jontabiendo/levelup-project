@@ -13,14 +13,19 @@ else:
 # create your SocketIO instance
 socketio = SocketIO(cors_allowed_origins=origins, logger=True, engineio_logger=True)
 
-@socketio.on("connect")
-def on_connect(data):
-    print("***")
-    print("connecting...", current_user)
-    print("***")
-#     first_name = data['user']['first_name'] or data['first_name']
-#     if data['teams']:
-#         emit("chat", first_name + " has connected", broadcast=True)
+# @socketio.on("connect")
+# def on_connect(data):
+#     print("***")
+#     print("connecting...", current_user)
+#     print("***")
+
+users = {}
+
+@socketio.on("online")
+def on_online(user):
+    print("***", user, "*** here")
+    users[user['socketID']] = user['user']
+    emit("online_res", users)
 
 # handle joining room 1
 @socketio.on("join")
@@ -38,3 +43,10 @@ def on_join(data):
 def handle_chat(data):
     room = data['room']
     emit("chat", {"user": data['user'], "msg": data['msg']}, to=room)
+
+@socketio.on("go_offline")
+def go_offline(socket_id):
+    del users[socket_id]
+
+    emit("online_res", users)
+    socketio.disconnect()

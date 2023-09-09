@@ -8,14 +8,22 @@ import Navigation from "./components/Navigation";
 import Background from "./components/Background";
 import HomePage from "./components/HomePage";
 import LandingPage from "./components/LandingPage";
-import Chat from "./components/chat";
+import ChatUsers from "./components/chat";
 import ErrorPage from "./components/404";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import socketIO from 'socket.io-client'
 
+let socket;
+if (process.env.NODE_ENV === "production") {
+	socket = socketIO.connect("https://levelup-lknw.onrender.com")
+} else {
+  socket = socketIO.connect()
+}
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const user = useSelector(state => state.session.user)
+  const teams = useSelector(state => state.teams)
 
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
@@ -33,7 +41,7 @@ function App() {
         </Route>
         <Route path='/lists'>
           {user ? <HomePage /> : <Redirect to="/login" />}
-          <Chat />
+          <ChatUsers user={user} teams={teams} socket={socket} />
         </Route>
           <Route path="/login" >
             <LoginFormPage />

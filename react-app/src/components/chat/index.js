@@ -1,73 +1,44 @@
-// import the socket
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
+import Chat from './chat';
 
-let socket;
-
-const Chat = () => {
-    const [messages, setMessages] = useState([]);
-    // use state for controlled form input
-    const [chatInput, setChatInput] = useState(""); 
-    const user = useSelector(state => state.session.user);
-    const teams = useSelector(state => state.teams)
-    console.log(user.first_name)
+const ChatUsers = ({ user, teams, socket }) => {
+    const [users, setUsers] = useState({});
+    const [showUsers, setShowUsers] = useState(false)
+    console.log(users)
 
     useEffect(() => {
-        // create websocket
-        socket = io();
+        // socket = io();
 
-        socket.emit("join", Object.values(teams)[0])
+        socket.on("connect", () => console.log("HERE", socket.id))
 
-        // socket
+        socket.emit("online", {user: user.first_name, socketID: socket.id})
 
-        socket.on("connect", () => {
-            console.log(socket.id)
-        })
-        
-        // listen for chat events
-        socket.on("chat", (chat) => {
-            // when we recieve a chat, add it into our messages array in state
-            setMessages(messages => [...messages, chat])
-            console.log(messages)
-        })
-        
-        // when component unmounts, disconnect
+        socket.on("online_res", (data) => setUsers(data))
+        console.log(users)
+
         return (() => {
-            socket.disconnect()
+            socket.emit("go_offline", socket.id)
         })
-    }, []);
+    }, [socket])
+    console.log(users)
 
-    const updateChatInput = (e) => {
-        setChatInput(e.target.value)
-    };
-
-    const sendChat = (e) => {
-        e.preventDefault()
-        // emit a message
-        socket.emit("chat", { user: user.first_name, msg: chatInput, room: Object.values(teams)[0].name});
-        // clear the input field after the message is sent
-        setChatInput("")
-        console.log(messages)
-    };
-
+    const divName = "chat-bar-div" + (showUsers ? "" : "-hidden")
     return (
-        // include the form in the return statement for the component
-        <div>
-            <div>
-                {messages.map((message, ind) => (
-                    <div key={ind}>{`${message.user}: ${message.msg}`}</div>
+        <div id={divName} onClick={() => setShowUsers(!showUsers)}>
+           <button id='chat-bar-button'>Chats</button>
+           {showUsers ? (
+            <div id='online-users-list'>
+                {Object.values(users).map(user => (
+                    <div className='online-user-div'>
+                        {user}
+                    </div>
                 ))}
             </div>
-            <form onSubmit={sendChat}>
-                <input
-                    value={chatInput}
-                    onChange={updateChatInput}
-                    />
-                <button type="submit">Send</button>
-            </form>
+           ) : null}
         </div>
     )
-};
+}
 
-export default Chat;
+export default ChatUsers
