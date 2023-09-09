@@ -17,7 +17,9 @@ const Chat = () => {
         // create websocket
         socket = io();
 
-        socket.emit("connect", user)
+        socket.emit("join", Object.values(teams)[0])
+
+        // socket
 
         socket.on("connect", () => {
             console.log(socket.id)
@@ -27,6 +29,7 @@ const Chat = () => {
         socket.on("chat", (chat) => {
             // when we recieve a chat, add it into our messages array in state
             setMessages(messages => [...messages, chat])
+            console.log(messages)
         })
         
         // when component unmounts, disconnect
@@ -42,7 +45,7 @@ const Chat = () => {
     const sendChat = (e) => {
         e.preventDefault()
         // emit a message
-        socket.emit("chat", { user: user.first_name, msg: chatInput });
+        socket.emit("chat", { user: user.first_name, msg: chatInput, room: Object.values(teams)[0].name});
         // clear the input field after the message is sent
         setChatInput("")
         console.log(messages)

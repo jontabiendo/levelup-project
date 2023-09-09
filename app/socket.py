@@ -1,4 +1,5 @@
 from flask_socketio import SocketIO, emit, send, join_room, leave_room
+from flask_login import current_user
 import os
 
 if os.environ.get("FLASK_ENV") == "production":
@@ -14,19 +15,26 @@ socketio = SocketIO(cors_allowed_origins=origins, logger=True, engineio_logger=T
 
 @socketio.on("connect")
 def on_connect(data):
-    first_name = data['user']['first_name'] or data['first_name']
-    if data['teams']:
-        emit("chat", first_name + " has connected", broadcast=True)
+    print("***")
+    print("connecting...", current_user)
+    print("***")
+#     first_name = data['user']['first_name'] or data['first_name']
+#     if data['teams']:
+#         emit("chat", first_name + " has connected", broadcast=True)
 
 # handle joining room 1
 @socketio.on("join")
 def on_join(data):
-    first_name = data['first_name']
-    room = "fellowship"
+    first_name = current_user.to_dict()['first_name']
+    room = data['name']
     join_room(room)
-    emit(first_name + " has entered the " + room, to=room)
+    print("***")
+    print(first_name + " has entered the " + room)
+    print("***")
+    emit("chat", {"user": first_name, "msg": first_name + " has entered the " + room}, to=room)
 
 # handle chat messages
 @socketio.on("chat")
 def handle_chat(data):
-    emit("chat", data, broadcast=True)
+    room = data['room']
+    emit("chat", {"user": data['user'], "msg": data['msg']}, to=room)
