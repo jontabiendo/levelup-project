@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 let socket;
 
-const Chat = ({ user }) => {
+const ChatBox = ({ user }) => {
     const [messages, setMessages] = useState([]);
     // use state for controlled form input
     const [chatInput, setChatInput] = useState("");
@@ -59,4 +59,4 @@ const Chat = ({ user }) => {
     )
 };
 
-export default Chat;
+export default ChatBox;

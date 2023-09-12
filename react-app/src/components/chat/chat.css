@@ -1,0 +1,38 @@
+#chat-bar-div {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+#team-chats-hidden {
+    height: 0rem;
+    width: 15rem;
+}
+
+#team-chats-list {
+    height: 20rem;
+    width: 18rem;
+    transition: height 200ms ease;
+    background-color: #FFF4CB;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 5px 5px 3px #f5bbb1, -5px -5px 3px #f5bbb1, 5px -5px 3px #f5bbb1, -5px 5px 3px #f5bbb1;
+    border-radius: 1rem 1rem 0 0;
+    padding: 1rem;
+}
+
+#chat-bar-button {
+    margin: 0;
+}
+
+.team-chat-selector {
+    padding: 0.5rem;
+}
+
+.team-chat-selector:hover {
+    background-color: #b7ad86;
+    cursor: pointer;
+}

@@ -11,9 +11,9 @@ import LandingPage from "./components/LandingPage";
 import ChatUsers from "./components/chat";
 import ErrorPage from "./components/404";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 
-let socket = io()
+// let socket = io()
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -26,7 +26,7 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} socket={socket} />
+      <Navigation isLoaded={isLoaded} />
       <Background />
       {isLoaded && (
         <>
@@ -36,7 +36,7 @@ function App() {
         </Route>
         <Route path='/lists'>
           {user ? <HomePage /> : <Redirect to="/login" />}
-          <ChatUsers user={user} teams={teams} socket={socket} />
+          <ChatUsers user={user} teams={teams}/>
         </Route>
           <Route path="/login" >
             <LoginFormPage />

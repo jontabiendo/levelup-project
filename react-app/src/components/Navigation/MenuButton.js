@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-function MenuButton({ user, socket }) {
+function MenuButton({ user}) {
   const dispatch = useDispatch();
   const history = useHistory()
   const [showMenu, setShowMenu] = useState(false);
@@ -31,7 +31,6 @@ function MenuButton({ user, socket }) {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
-    socket.emit("go_offline", socket.id)
     history.push('/')
     setShowMenu(false)
   };

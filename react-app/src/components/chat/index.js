@@ -1,46 +1,47 @@
 import { io } from 'socket.io-client';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import Chat from './chat';
+import ChatBox from './chat';
+
+import './chat.css'
 
 let socket;
 
-const ChatUsers = ({ user, teams }) => {
+const Chat = ({ user, teams }) => {
     const [teamRooms, setTeamRooms] = useState({});
     const [showRooms, setShowRooms] = useState(false)
-    console.log(teamRooms)
 
     useEffect(() => {
         socket = io();
 
-        socket.on("connect", () => console.log("HERE", socket.id))
+        socket.on("connect", () => console.log("A user connected"))
 
-        socket.emit("online", {user: user.first_name, teams: Object.keys(teams)})
+        socket.emit("online", {user: user.id, teams: Object.keys(teams)})
 
         socket.on("online_res", (data) => setTeamRooms(data))
-        console.log(teamRooms)
 
         return (() => {
-            socket.emit("go_offline", socket.id)
+            socket.emit("go_offline", {user: user.id, teams: teamRooms})
         })
-    }, [socket])
-    console.log(teamRooms)
+    }, [teamRooms])
 
-    const divName = "chat-bar-div" + (showRooms ? "" : "-hidden")
     return (
-        <div id={divName} >
-           <button onClick={() => setShowRooms(!showRooms)} id='chat-bar-button'>Chats</button>
+        <div id="chat-bar-div" >
            {showRooms ? (
-            <div id='online-users-list'>
+            <div id='team-chats-list'>
                 {Object.values(teams).map(team => (
-                    <div className='online-user-div'>
+                    <div className='team-chat-selector'>
                         {team.name}
                     </div>
                 ))}
             </div>
-           ) : null}
+           ) : (
+            <div id="team-chats-hidden">
+            </div>
+           )}
+           <button onClick={() => setShowRooms(!showRooms)} id='chat-bar-button'>Chats</button>
         </div>
     )
 }
 
-export default ChatUsers
+export default Chat;

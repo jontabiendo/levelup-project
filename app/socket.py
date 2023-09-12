@@ -1,5 +1,6 @@
-from flask_socketio import SocketIO, emit, send, join_room, leave_room
+from flask_socketio import SocketIO, emit, send, join_room, leave_room, disconnect
 from flask_login import current_user
+from flask import request
 import os
 
 if os.environ.get("FLASK_ENV") == "production":
@@ -13,11 +14,9 @@ else:
 # create your SocketIO instance
 socketio = SocketIO(cors_allowed_origins=origins, logger=True, engineio_logger=True)
 
-# @socketio.on("connect")
-# def on_connect(data):
-#     print("***")
-#     print("connecting...", current_user)
-#     print("***")
+@socketio.on("connect")
+def on_connect():
+    print("*** a user connected ***")
 
 # users = {}
 rooms = {}
@@ -28,8 +27,10 @@ def on_online(data):
     for team in data['teams']:
         if team not in rooms:
             rooms[team] = []
-        join_room(team)
-        rooms[team].append(data['user'])
+        if data['user'] not in rooms[team]:
+            join_room(team)
+            rooms[team].append(data['user'])
+    print("*** rooms joined: ", rooms, " ***")
     emit("online_res", rooms)
 
 # handle joining room 1
@@ -51,9 +52,14 @@ def handle_chat(data):
 
 @socketio.on("go_offline")
 def go_offline(data):
+    print("*** leaving rooms: ", rooms, " ***")
     for team in data['teams']:
-        filter(lambda x: x != data['user'], team)
+        rooms[team] = list(filter(lambda x: x != data['user'], rooms[team]))
         leave_room(team)
-
+    print("*** ", rooms, " ***")
     emit("online_res", rooms)
-    socketio.disconnect()
+    disconnect()
+
+@socketio.on("disconnect")
+def on_disconnect():
+    print("*** ",  " disconnected ***")
