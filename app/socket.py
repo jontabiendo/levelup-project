@@ -12,7 +12,7 @@ else:
     origins = "*"
 
 # create your SocketIO instance
-socketio = SocketIO(cors_allowed_origins=origins, logger=True, engineio_logger=True)
+socketio = SocketIO(cors_allowed_origins=origins)
 
 @socketio.on("connect")
 def on_connect():
@@ -34,15 +34,15 @@ def on_online(data):
     emit("online_res", rooms)
 
 # handle joining room 1
-@socketio.on("join")
-def on_join(data):
-    first_name = current_user.to_dict()['first_name']
-    room = data['name']
-    join_room(room)
-    print("***")
-    print(first_name + " has entered the " + room)
-    print("***")
-    emit("chat", {"user": first_name, "msg": first_name + " has entered the " + room}, to=room)
+# @socketio.on("join")
+# def on_join(data):
+#     first_name = current_user.to_dict()['first_name']
+#     room = data['name']
+#     join_room(room)
+#     print("***")
+#     print(first_name + " has entered the " + room)
+#     print("***")
+#     emit("chat", {"user": first_name, "msg": first_name + " has entered the " + room}, to=room)
 
 # handle chat messages
 @socketio.on("chat")
@@ -52,9 +52,13 @@ def handle_chat(data):
 
 @socketio.on("go_offline")
 def go_offline(data):
-    print("*** leaving rooms: ", rooms, " ***")
+    print("*** leaving rooms: ", rooms, data, " ***")
     for team in data['teams']:
+        print(rooms[team])
+        
         rooms[team] = list(filter(lambda x: x != data['user'], rooms[team]))
+
+        print(rooms[team])
         leave_room(team)
     print("*** ", rooms, " ***")
     emit("online_res", rooms)
